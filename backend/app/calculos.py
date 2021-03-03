@@ -1,7 +1,7 @@
-from application import stock_util as su
+from . import stock_util as su
 import math 
 import numpy as np
-from application.models import Acao
+from .models import Acao
 
 def calculo_dcf(lpa, anos_prev, g_prev, g_term, taxa_desconto):
     taxa_desconto = float(taxa_desconto)*1.0/100

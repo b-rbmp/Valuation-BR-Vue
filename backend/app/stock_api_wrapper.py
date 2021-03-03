@@ -7,8 +7,8 @@ import http.cookiejar
 
 from lxml.html import fragment_fromstring
 from collections import OrderedDict
-from application import db  
-from application.models import Acao
+from . import db  
+from .models import Acao
         
 
 # Get data from www.fundamentos.com.br
