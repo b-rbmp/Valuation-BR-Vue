@@ -6,6 +6,7 @@ import urllib.parse
 import http.cookiejar
 
 from lxml.html import fragment_fromstring
+from datetime import datetime
 from collections import OrderedDict
 from . import db  
 from .models import Acao
@@ -153,9 +154,11 @@ def update_sql():
             acao_existente.payout = Acao.to_storage_format(dados['Payout'])
             acao_existente.margem_liq = Acao.to_storage_format(dados['MargemLiq'])
             acao_existente.cres5 = Acao.to_storage_format(dados['Cres5'])
+            acao_existente.last_updated = datetime.utcnow
         else:
             acao = Acao(
                 ticker=ticker, 
+                last_updated = datetime.utcnow,
                 dy=Acao.to_storage_format(dados['DY']),
                 patr_liq=dados['PatrimonioLiq'],
                 roe=Acao.to_storage_format(dados['ROE']),
