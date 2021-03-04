@@ -154,7 +154,7 @@ def update_sql():
             acao_existente.payout = Acao.to_storage_format(dados['Payout'])
             acao_existente.margem_liq = Acao.to_storage_format(dados['MargemLiq'])
             acao_existente.cres5 = Acao.to_storage_format(dados['Cres5'])
-            acao_existente.last_updated = datetime.now()
+            acao_existente.last_updated = datetime.utcnow()
         else:
             acao = Acao(
                 ticker=ticker,
