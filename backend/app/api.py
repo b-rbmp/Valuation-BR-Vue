@@ -11,10 +11,15 @@ from .models import Acao
 
 api = Blueprint('api', __name__)
 
-@api.route('/ativo/<string:ativo>/')
+@api.route('/ativo/<string:ativo>/', methods=('GET', 'POST'))
 def ativo(ativo):
-    response = { 'msg': "Hello {}".format(ativo)}
-    return jsonify(response)
+    if request.method == 'GET':
+      response_object = { 'status': "success" }
+      return jsonify(response_object)
+    elif request.method == 'POST':
+      response_object = { 'status': "success" }
+      return jsonify(response_object)
+
 
 @api.route('/ativos/')
 def ativos():
