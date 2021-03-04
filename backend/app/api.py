@@ -19,7 +19,7 @@ def ativo(ativo):
 @api.route('/ativos/')
 def ativos():
   ativos = Acao.query.all()
-  return jsonify({ 'ativos': [acao.to_dict() for acao in ativos] })
+  return jsonify({ 'ativos': [acao.ticker for acao in ativos] })
 
 # @api.route('/search/<string:ativo>/')
 # def search(ativo):
