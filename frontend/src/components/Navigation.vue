@@ -29,18 +29,9 @@
               <!-- Right aligned nav items -->
               <b-navbar-nav class="ml-auto">
                 <b-navbar-nav>
-                    <b-nav-item
-                      to="Sobre"
-                      class="mr-5"
-                      >
-                      <span class="text-white font-weight-bold">
-                      Sobre
-                      </span>
-                    </b-nav-item>
-
+                    <custom-nav-item texto="Sobre" view="Sobre"/>
                 </b-navbar-nav>
               </b-navbar-nav>
-              <custom-nav-item title="Sobre" view="Sobre"/>
         </b-navbar>
     </div>
 </template>

@@ -1,15 +1,11 @@
 <template>
-    <div class="footer-comp fixed-bottom">
-        <b-nav-item
-        to="{{ view }}"
-        class="mr-5"
-        >
-            <span class="text-white font-weight-bold">
-                {{ texto }}
-            </span>
-        </b-nav-item>
-
-    </div>
+  <div v-b-hover="handleHover">
+    <b-nav-item :to="view" class="mr-5 rounded" :class="isHovered ? 'nav-animation' : ''">
+      <span class="font-weight-bold" :class="isHovered ? 'text-animation' : 'text-default'">
+        {{ texto }}
+      </span>
+    </b-nav-item>
+  </div>
 </template>
 
 <script>
@@ -31,4 +27,15 @@ export default {
 </script>
 
 <style scoped>
+.nav-animation {
+  transition: 0.5s;
+  background-color: #ffffff;
+}
+.text-default {
+  color: white;
+}
+.text-animation {
+  transition: 0.75s;
+  color: black;
+}
 </style>
