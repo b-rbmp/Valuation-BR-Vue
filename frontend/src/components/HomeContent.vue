@@ -15,11 +15,13 @@
                     </span>
                 </b-col>
             </b-row>
-            <b-row class="justify-content-center">
-                <div style="font-size: 4rem;">
-                    <span class="h2">COLOCAR IMAGEM</span>
-                </div>
-            </b-row>
+            <div class="row justify-content-center">
+                <span class="iconify mt-4"
+                data-icon="fxemoji:stockchart"
+                data-width="300"
+                data-height="300"
+                data-inline="false"></span>
+            </div>
         </b-container>
     </div>
 </template>

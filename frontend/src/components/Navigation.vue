@@ -36,16 +36,18 @@
                       <span class="text-white font-weight-bold">
                       Sobre
                       </span>
-                      </b-nav-item>
+                    </b-nav-item>
 
                 </b-navbar-nav>
               </b-navbar-nav>
-
+              <custom-nav-item title="Sobre" view="Sobre"/>
         </b-navbar>
     </div>
 </template>
 
 <script>
+import CustomNavItem from './nav_subcomponents/CustomNavItem.vue';
+
 export default {
   name: 'Navigation',
   data() {
@@ -58,6 +60,9 @@ export default {
       console.log('oi');
       // TODO
     },
+  },
+  components: {
+    CustomNavItem,
   },
 };
 </script>
