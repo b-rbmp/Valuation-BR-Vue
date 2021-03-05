@@ -1,9 +1,20 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/> -->
+    <navigation/>
+    <router-view/>
+    <footer-comp/>
   </div>
 </template>
+
+<script>
+import Navigation from './components/Navigation.vue';
+import FooterComp from './components/FooterComp.vue';
+
+export default {
+  name: 'App',
+  components: {
+    Navigation,
+    FooterComp,
+  },
+};
+</script>
