@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <navigation/>
+    <br><br><br><br>
     <router-view/>
     <footer-comp/>
   </div>
@@ -18,3 +19,9 @@ export default {
   },
 };
 </script>
+
+<style>
+body {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+</style>

@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <b-navbar sticky toggleable="lg" type="dark" variant="dark">
+    <div class="fixed-top">
+        <b-navbar toggleable="lg" type="dark" variant="dark">
             <b-navbar-brand to="/" class="ml-5 font-weight-bold">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-graph-up" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5
