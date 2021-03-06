@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import Sobre from '../views/Sobre.vue';
 import Ativo from '../views/Ativo.vue';
+import Erro from '../views/Erro.vue';
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,11 @@ const routes = [
     path: '/ativo',
     name: 'Ativo',
     component: Ativo,
+  },
+  {
+    path: '/erro',
+    name: 'Erro',
+    component: Erro,
   },
 ];
 

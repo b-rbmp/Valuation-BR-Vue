@@ -15,7 +15,7 @@
               valuation para um determinado ativo. Atualmente estão disponíveis as seguintes
               metodologias:
             </span>
-            <div class="accordion mt-2">
+            <div class="accordion mt-3">
               <b-card no-body class="mb-1">
                 <b-card-header header-tag="header" class="p-1" role="tab">
                   <b-button block v-b-toggle.accordion-1 variant="dark">
