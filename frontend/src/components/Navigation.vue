@@ -23,13 +23,13 @@
                     size="md"
                     type="submit"
                     variant="outline-light"
-                    @click.prevent="getMeal"
+                    v-on:click.prevent="searchAtivo"
                     >Procurar</b-button>
               </b-nav-form>
               <!-- Right aligned nav items -->
               <b-navbar-nav class="ml-auto">
                 <b-navbar-nav>
-                    <custom-nav-item texto="Sobre" view="Sobre"/>
+                    <custom-nav-item texto="Sobre" view="/sobre"/>
                 </b-navbar-nav>
               </b-navbar-nav>
         </b-navbar>
@@ -37,6 +37,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 import CustomNavItem from './nav_subcomponents/CustomNavItem.vue';
 
 export default {
@@ -47,10 +49,19 @@ export default {
     };
   },
   methods: {
-    getAtivo() {
-      console.log('oi');
-      // TODO
+    searchAtivo() {
+      if (this.ativos.includes(this.ativo.toUpperCase())) {
+        this.$router.push({ name: 'Ativo', params: { ativo: this.ativo.toUpperCase() } });
+      } else {
+        alert('Ativo não encontrado'); // @TODO, fazer com popover
+      }
     },
+  },
+  computed: mapState({
+    ativos: (state) => (state.ativos.data.ativos),
+  }),
+  beforeMount() {
+    this.$store.dispatch('loadAtivos');
   },
   components: {
     CustomNavItem,

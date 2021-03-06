@@ -5,6 +5,7 @@
 </template>
 
 <script>
+
 // @ is an alias to /src
 import AtivoContent from '@/components/AtivoContent.vue';
 

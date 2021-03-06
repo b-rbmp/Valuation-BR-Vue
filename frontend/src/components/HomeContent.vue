@@ -18,8 +18,8 @@
             <div class="row justify-content-center">
                 <span class="iconify mt-3"
                 data-icon="fxemoji:stockchart"
-                data-width="275"
-                data-height="275"
+                data-width="300"
+                data-height="300"
                 data-inline="false"></span>
             </div>
         </b-container>
