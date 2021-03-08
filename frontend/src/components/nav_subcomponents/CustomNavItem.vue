@@ -1,6 +1,6 @@
 <template>
   <div v-b-hover="handleHover">
-    <b-nav-item :to="view" class="mr-5 rounded" :class="isHovered ? 'nav-animation' : ''">
+    <b-nav-item :to="view" class="mr-2 px-2 rounded" :class="isHovered ? 'nav-animation' : ''">
       <span class="font-weight-bold" :class="isHovered ? 'text-animation' : 'text-default'">
         {{ texto }}
       </span>

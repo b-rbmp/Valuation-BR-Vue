@@ -2,8 +2,8 @@
   <div class="ativo-content">
     <div id="conditionalShowing" v-if="ativos != null">
       <b-container v-if="existAtivo()">
-        <b-row class="justify-content-md-center">
-          <b-col class="display-4 text-center mt-2 pt-3">
+        <b-row class="justify-content-center">
+          <b-col class="display-4 text-center pt-3">
             Valuation de <b-badge pill variant="dark"> {{ $route.params.ativo }} </b-badge>
           </b-col>
         </b-row>
@@ -12,38 +12,47 @@
           <b-tabs pills card content-class="mt-3" align="center" v-model="tabIndex">
             <b-tab title="Graham" :title-link-class="linkClass(0)" active>
               <b-container>
-                <b-row class="justify-content-md-center">
+                <b-row class="justify-content-center">
                   <span class="display-4 method-title text-center">Método de Graham</span>
                 </b-row>
-                <b-row class="justify-content-md-center">
-                  <graham-content :preco_justo=1.00 :cotacao_atual=1.53 :upside=30.1 />
+                <b-row class="justify-content-center">
+                  <results-content :preco_justo=1.00 :cotacao_atual=1.53 :upside=-51.2 />
+                </b-row>
+                <b-row class="justify-content-center">
+                  <graham-exp-content :preco_justo=1.00 :lpa=1.4 :vpa=1 />
                 </b-row>
               </b-container>
             </b-tab>
             <b-tab title="DCF(LPA)" :title-link-class="linkClass(1)">
               <b-container>
-                <b-row class="justify-content-md-center">
-                  <h5 class="text-center">
+                <b-row class="justify-content-center">
+                  <span class="display-4 method-title text-center">
                     Método de Fluxo de Caixa Descontado com LPA (DCF-LPA)
-                  </h5>
+                  </span>
                 </b-row>
               </b-container>
             </b-tab>
             <b-tab title="Lynch" :title-link-class="linkClass(2)">
               <b-container>
-                <b-row class="justify-content-md-center">
-                  <h5 class="text-center">
+                <b-row class="justify-content-center">
+                  <span class="display-4 method-title text-center">
                     Método de Lynch (Valor)
-                  </h5>
+                  </span>
+                </b-row>
+                <b-row class="justify-content-center">
+                    <results-content :preco_justo=1.00 :cotacao_atual=1.53 :upside=-51.2 />
                 </b-row>
               </b-container>
             </b-tab>
             <b-tab title="PSBe" :title-link-class="linkClass(3)">
               <b-container>
-                <b-row class="justify-content-md-center">
-                  <h5 class="text-center">
+                <b-row class="justify-content-center">
+                  <span class="display-4 method-title text-center">
                     Método PSBe (Valor)
-                  </h5>
+                  </span>
+                </b-row>
+                <b-row class="justify-content-center">
+                    <results-content :preco_justo=1.00 :cotacao_atual=1.53 :upside=-51.2 />
                 </b-row>
               </b-container>
             </b-tab>
@@ -53,7 +62,7 @@
       <erro-content v-else />
     </div>
     <div v-else>
-      <b-row class="justify-content-md-center">
+      <b-row class="justify-content-center">
         <b-col class="display-4 text-center mt-2 pt-3">
           Carregando...
         </b-col>
@@ -65,7 +74,8 @@
 
 <script>
 import ErroContent from './ativo_subcomponents/ErroContent.vue';
-import GrahamContent from './ativo_subcomponents/GrahamContent.vue';
+import ResultsContent from './ativo_subcomponents/ResultsContent.vue';
+import GrahamExpContent from './ativo_subcomponents/GrahamExpContent.vue';
 
 export default {
   name: 'AtivoContent',
@@ -99,7 +109,8 @@ export default {
   },
   components: {
     ErroContent,
-    GrahamContent,
+    ResultsContent,
+    GrahamExpContent,
   },
 };
 </script>

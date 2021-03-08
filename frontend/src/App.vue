@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <navigation/>
-    <br><br><br><br>
     <router-view/>
     <footer-comp/>
   </div>
@@ -23,5 +22,6 @@ export default {
 <style>
 body {
   background-color: rgba(0, 0, 0, 0.03);
+  padding: 6rem 0rem 0rem 0rem;
 }
 </style>

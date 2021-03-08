@@ -1,14 +1,14 @@
 <template>
   <div class="sobre-content">
     <b-container>
-      <b-row class="justify-content-md-center">
+      <b-row class="justify-content-center">
         <b-col class="display-4 text-center">
           Sobre
         </b-col>
       </b-row>
       <br />
-      <b-row class="justify-content-md-center">
-        <div class="col-7 text-center mt-2">
+      <b-row class="justify-content-center">
+        <div class="col-12 col-lg-7 text-center mt-2">
           <div class="text-wrap lead">
             <span>
               Este site foi formulado para permitir a comparação de diferentes metodologias de
