@@ -16,10 +16,13 @@
                   <span class="display-4 method-title text-center">Método de Graham</span>
                 </b-row>
                 <b-row class="justify-content-center">
-                  <results-content :preco_justo=1.00 :cotacao_atual=1.53 :upside=-51.2 />
+                  <results-content :preco_justo="1.0" :cotacao_atual="1.53" :upside="51.2" />
                 </b-row>
                 <b-row class="justify-content-center">
-                  <graham-exp-content :preco_justo=1.00 :lpa=1.4 :vpa=1 />
+                  <graham-exp-content :lpa="1.4" :vpa="1" />
+                </b-row>
+                <b-row class="justify-content-center">
+                  <grafico-content :precoJusto="1.4" :graphData="1" />
                 </b-row>
               </b-container>
             </b-tab>
@@ -40,7 +43,15 @@
                   </span>
                 </b-row>
                 <b-row class="justify-content-center">
-                    <results-content :preco_justo=1.00 :cotacao_atual=1.53 :upside=-51.2 />
+                  <results-content :preco_justo="1.0" :cotacao_atual="1.53" :upside="-51.2" />
+                </b-row>
+                <b-row class="justify-content-center">
+                  <lynch-exp-content
+                    :roe="59.1"
+                    :preco_lucro="14"
+                    :payout="12.4"
+                    :dividend_yield="4"
+                  />
                 </b-row>
               </b-container>
             </b-tab>
@@ -52,7 +63,17 @@
                   </span>
                 </b-row>
                 <b-row class="justify-content-center">
-                    <results-content :preco_justo=1.00 :cotacao_atual=1.53 :upside=-51.2 />
+                  <results-content :preco_justo="1.0" :cotacao_atual="1.53" :upside="-51.2" />
+                </b-row>
+                <b-row class="justify-content-center">
+                  <psbe-exp-content
+                    :patr_liquido="3000.12"
+                    :receita_liquida="1412.1"
+                    :rno="133.1"
+                    :lucro_liquido="1234.1"
+                    :n_acoes="95103131"
+                    :constante="5.5"
+                  />
                 </b-row>
               </b-container>
             </b-tab>
@@ -76,6 +97,9 @@
 import ErroContent from './ativo_subcomponents/ErroContent.vue';
 import ResultsContent from './ativo_subcomponents/ResultsContent.vue';
 import GrahamExpContent from './ativo_subcomponents/GrahamExpContent.vue';
+import LynchExpContent from './ativo_subcomponents/LynchExpContent.vue';
+import PsbeExpContent from './ativo_subcomponents/PsbeExpContent.vue';
+import GraficoContent from './ativo_subcomponents/GraficoContent.vue';
 
 export default {
   name: 'AtivoContent',
@@ -111,6 +135,9 @@ export default {
     ErroContent,
     ResultsContent,
     GrahamExpContent,
+    LynchExpContent,
+    PsbeExpContent,
+    GraficoContent,
   },
 };
 </script>

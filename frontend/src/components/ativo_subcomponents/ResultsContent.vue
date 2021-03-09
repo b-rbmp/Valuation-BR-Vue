@@ -37,8 +37,8 @@
         align="center"
         header-class="card-title"
       >
-        <b-card-text :class="upsideClass()"
-          ><span class="iconify card-icon" :data-icon="upsideIcon()" data-inline="false"> </span>
+        <b-card-text class="card-text lead"
+          ><span :class="upsideClass()" :data-icon="upsideIcon()" data-inline="false"> </span>
           {{ upside.toFixed(2) }} %</b-card-text
         >
       </b-card>
@@ -57,21 +57,21 @@ export default {
   methods: {
     upsideIcon() {
       if (this.upside > 0) {
-        return 'mdi:arrow-up-bold-box';
+        return 'ic:baseline-keyboard-arrow-up';
       }
       if (this.upside < 0) {
-        return 'mdi:arrow-down-bold-box';
+        return 'ic:baseline-keyboard-arrow-down';
       }
-      return 'mdi:equal-box';
+      return 'ic:baseline-equals';
     },
     upsideClass() {
       if (this.upside > 0) {
-        return ['text-success', 'lead', 'card-text'];
+        return ['text-success', 'iconify', 'card-icon'];
       }
       if (this.upside < 0) {
-        return ['text-danger', 'lead', 'card-text'];
+        return ['text-danger', 'iconify', 'card-icon'];
       }
-      return ['text-dark', 'lead', 'card-text'];
+      return ['text-dark', 'iconify', 'card-icon'];
     },
   },
 };
