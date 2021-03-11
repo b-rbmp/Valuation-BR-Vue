@@ -22,7 +22,11 @@
                   <graham-exp-content :lpa="1.4" :vpa="1" />
                 </b-row>
                 <b-row class="justify-content-center">
-                  <grafico-content :precoJusto="1.4" :graphData="1" />
+                  <grafico-content
+                    :precoJusto="100"
+                    :graphData="1"
+                    :stockName="$route.params.ativo"
+                  />
                 </b-row>
               </b-container>
             </b-tab>

@@ -10,7 +10,7 @@
       </b-row>
       <br />
       <b-row class="justify-content-center">
-        <div class="col-12 col-lg-7 text-center mt-2 mb-5">
+        <div class="col-12 col-lg-9 text-center mt-2 mb-5">
           <div class="text-wrap lead">
             <span>
               Apenas ações que relataram lucro líquido positivo nos últimos 12 meses estão

@@ -1,5 +1,5 @@
 <template>
-  <div class="psbe-exp-content mt-4 col-lg-8 col-12">
+  <div class="psbe-exp-content mt-4 col-lg-9 col-12">
     <div class="accordion" role="tablist">
       <b-card no-body class="mb-1">
         <b-card-header header-tag="header" class="p-1" role="tab">

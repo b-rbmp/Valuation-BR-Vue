@@ -45,9 +45,34 @@ def get_historico(ticker):
         acao = Ticker(ticker+'.SA')
         historico = acao.history(period="10y", interval="1d")
         historico_index_reset = historico.reset_index()
-        return historico_index_reset
+        # Tirar colunas inuteis para o front-end. Depois ver como usar splits pra corrigir
+        historico_drop = historico_index_reset.drop(['volume','symbol', 'open', 'close', 'dividends'], axis=1)
+        return historico_drop
     else: 
         return None
+
+def get_used_calculated_data(ticker): 
+    acao = get_acao(ticker)
+    if acao is not None:
+        acaodata = {}
+        acaodata['dividend_yield'] = Acao.to_real_format(acao.dy)
+        acaodata['cres5anos'] = Acao.to_real_format(acao.cres5)
+        acaodata['roe'] = Acao.to_real_format(acao.roe)
+        acaodata['payout'] = Acao.to_real_format(acao.payout)
+        lpa = Acao.to_real_format(acao.lpa)
+        acaodata['lpa'] = lpa
+        acaodata['preco_lucro'] = get_precolucro(ticker, lpa)
+        acaodata['vpa'] = Acao.to_real_format(acao.vpa)
+        acaodata['patr_liquido'] = acao.patr_liq
+        margem_liq = Acao.to_real_format(acao.margem_liq)
+        acaodata['margem_liq'] = margem_liq
+        acaodata['receita_liquida'] = get_receitaliquida(lucro_liq=acao.lucro_liq, margem_liq=margem_liq)
+        acaodata['lucro_liquido'] = acao.lucro_liq
+        acaodata['n_acoes'] = acao.n_acoes
+        return acaodata
+    else:
+        return 0
+
 
 # def get_historico_plot_json(ticker, precojusto):
 #     historico = get_historico(ticker)

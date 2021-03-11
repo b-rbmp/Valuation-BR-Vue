@@ -8,7 +8,7 @@
       </b-row>
       <br />
       <b-row class="justify-content-center">
-        <div class="col-12 col-lg-8 text-center mt-2">
+        <div class="col-12 col-lg-10 text-center mt-2">
           <div class="text-wrap lead">
             <span>
               Este site foi formulado para permitir a comparação de diferentes metodologias de
