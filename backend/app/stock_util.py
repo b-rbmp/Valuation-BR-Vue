@@ -7,6 +7,7 @@ Created on Thu Feb  4 18:55:05 2021
 from . import db  
 from .models import Acao
 from yahooquery import Ticker
+from datetime import datetime
 import pandas as pd
 import numpy as np
 import json
@@ -45,8 +46,10 @@ def get_historico(ticker):
         acao = Ticker(ticker+'.SA')
         historico = acao.history(period="10y", interval="1d")
         historico_index_reset = historico.reset_index()
+
+        historico_index_reset['date'] = historico_index_reset['date'].apply(lambda x: str(x))
         # Tirar colunas inuteis para o front-end. Depois ver como usar splits pra corrigir
-        historico_drop = historico_index_reset.drop(['volume','symbol', 'open', 'close', 'dividends'], axis=1)
+        historico_drop = historico_index_reset.drop(['volume','symbol', 'open', 'close', 'dividends', 'high', 'low'], axis=1, errors='ignore')
         return historico_drop
     else: 
         return None
@@ -69,32 +72,7 @@ def get_used_calculated_data(ticker):
         acaodata['receita_liquida'] = get_receitaliquida(lucro_liq=acao.lucro_liq, margem_liq=margem_liq)
         acaodata['lucro_liquido'] = acao.lucro_liq
         acaodata['n_acoes'] = acao.n_acoes
+        acaodata['isbank'] = acao.isbank
         return acaodata
     else:
         return 0
-
-
-# def get_historico_plot_json(ticker, precojusto):
-#     historico = get_historico(ticker)
-#     if (historico is not None):
-#         data=[go.Candlestick(x=historico['date'], open=historico['open'], high=historico['high'], low=historico['low'], close=historico['close'])]
-#         fig = go.Figure(data)
-
-#         # Change the Candle Mode
-#         fig.update_layout(
-#             autosize=True,
-#             paper_bgcolor='rgba(0,0,0,0)',
-#             plot_bgcolor='rgba(0,0,0,0)'
-#         )
-
-#         fig.add_hline(y=precojusto, line_width=2, 
-#                       line_color="LightGreen", 
-#                       line_dash="dash", 
-#                       annotation_text="Preço Calculado: R$ " + str(precojusto), 
-#                       annotation_position="bottom")
-
-#         graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
-
-#         return graphJSON
-#     else:
-#         return 0

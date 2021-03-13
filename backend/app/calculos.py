@@ -27,8 +27,9 @@ def calculo_psbe(ticker):
         constant_VMCM = 5.5 # Constante VMCM que indica a captação de fluxo financeiro na bolsa. 
         # @TODO CRIAR METODO P CALCULAR A CONSTANTE VMCM FAZENDO UM BEST FIT DESSA CONSTANTE, QUE É BASICAMENTE COMPARAR O PREÇO JUSTO COM A COTAÇÃO E FAZER O BEST FIT, LEMBRANDO
         # DE APENAS FAZER PARA EMPRESAS COM LUCRO LIQUIDO POSITIVO
-        
-        preco_justo = (patr_liq+rec_liq+rec_naoop+((lucro_liq-rec_naoop)*math.exp(margem_liq*(-math.log(margem_liq))*constant_VMCM*np.sign(margem_liq))))/n_acoes
+        preco_justo = 0
+        if margem_liq != 0:
+            preco_justo = (patr_liq+rec_liq+rec_naoop+((lucro_liq-rec_naoop)*math.exp(margem_liq*(-math.log(margem_liq))*constant_VMCM*np.sign(margem_liq))))/n_acoes
         return round(preco_justo, 2)
     else:
         return 0
@@ -49,8 +50,10 @@ def calculo_lynch_ROE(ticker):
     if acao is not None:
         dividend_yield = Acao.to_real_format(acao.dy)
         crescimento = (1-Acao.to_real_format(acao.payout))*Acao.to_real_format(acao.roe) # Calculo de crescimento usando (1-Payout)*ROE.
-        pegy = su.get_precolucro(ticker, Acao.to_real_format(acao.lpa))/((crescimento + dividend_yield)*100)
-        preco_justo = su.get_cotacao(ticker)/pegy
+        preco_justo = 0
+        if (crescimento + dividend_yield) != 0:
+            pegy = su.get_precolucro(ticker, Acao.to_real_format(acao.lpa))/((crescimento + dividend_yield)*100)
+            preco_justo = su.get_cotacao(ticker)/pegy
         return round(preco_justo, 2)
     else:
         return 0
@@ -60,8 +63,10 @@ def calculo_lynch_CRES(ticker):
     if acao is not None:
         dividend_yield = Acao.to_real_format(acao.dy)
         crescimento = Acao.to_real_format(acao.cres5) # Calculo de crescimento usando Crescimento 5a (ver se uso CAGR 5A)
-        pegy = su.get_precolucro(ticker, Acao.to_real_format(acao.lpa))/((crescimento + dividend_yield)*100)
-        preco_justo = su.get_cotacao(ticker)/pegy
+        preco_justo = 0
+        if (crescimento + dividend_yield) != 0:
+            pegy = su.get_precolucro(ticker, Acao.to_real_format(acao.lpa))/((crescimento + dividend_yield)*100)
+            preco_justo = su.get_cotacao(ticker)/pegy
         return round(preco_justo, 2)
     else:
         return 0

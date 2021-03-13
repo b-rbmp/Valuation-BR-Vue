@@ -6,18 +6,20 @@ import urllib.parse
 import http.cookiejar
 
 from lxml.html import fragment_fromstring
+from yahooquery import Ticker
 from datetime import datetime
 from collections import OrderedDict
-from . import db  
+from . import db
 from .models import Acao
-        
+
 
 # Get data from www.fundamentos.com.br
 # Credits: Phoemur (https://github.com/phoemur/fundamentus/blob/master/fundamentus.py)
 def get_data(*args, **kwargs):
     url = 'http://www.fundamentus.com.br/resultado.php'
     cookie_jar = http.cookiejar.CookieJar()
-    opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cookie_jar))
+    opener = urllib.request.build_opener(
+        urllib.request.HTTPCookieProcessor(cookie_jar))
     opener.addheaders = [('User-agent', 'Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2) Gecko/20110201'),
                          ('Accept', 'text/html, text/plain, text/css, text/sgml, */*;q=0.01')]
 
@@ -26,7 +28,7 @@ def get_data(*args, **kwargs):
     data = {'pl_min': '',
             'pl_max': '',
             'pvp_min': '',
-            'pvp_max' : '',
+            'pvp_max': '',
             'psr_min': '',
             'psr_max': '',
             'divy_min': '',
@@ -94,34 +96,44 @@ def get_data(*args, **kwargs):
                                                                         'Pat.Liq': to_float(rows.getchildren()[18].text),
                                                                         'Div.Brut/Pat.': to_float(rows.getchildren()[19].text),
                                                                         'Cresc.5anos': to_float(rows.getchildren()[20].text)}})
-    
+
     dataframe_result = pd.DataFrame(result, columns=result.keys()).transpose()
     dataframe_filtered = dataframe_result.copy()
     for ticker in dataframe_result.index:
         if (dataframe_result.loc[ticker]['P/L'] <= 0 or dataframe_result.loc[ticker]['P/VP'] <= 0):
             dataframe_filtered.drop(index=ticker, inplace=True)
-            
-        
-    return dataframe_filtered
-    
-def to_float(string):
-  string = string.replace('.', '')
-  string = string.replace(',', '.')
 
-  if (string.endswith('%')):
-    string = string[:-1]
-    return float(string) / 100
-  else:
-    return float(string)
+    return dataframe_filtered
+
+
+def to_float(string):
+    string = string.replace('.', '')
+    string = string.replace(',', '.')
+
+    if (string.endswith('%')):
+        string = string[:-1]
+        return float(string) / 100
+    else:
+        return float(string)
+
+
+def getBank(ticker):
+    listBanks = ['BPAC11', 'BPAC5', 'BPAC3', 'ABCB4', 'BBAS3', 'SANB3',
+                 'SANB4', 'SANB11', 'ITUB4', 'ITUB3', 'BBDC4', 'BBDC3', 
+                 'BIDI11', 'BIDI4', 'BIDI3', 'BRSR3', 'BRSR5', 'BRSR6', 
+                 'BPAN4']
+    return ticker in listBanks
 
 
 def fetch_ativo(ticker, data_fundamentos):
-    LPA = data_fundamentos.loc[ticker]['Cotacao']/data_fundamentos.loc[ticker]['P/L']
-    VPA = data_fundamentos.loc[ticker]['Cotacao']/data_fundamentos.loc[ticker]['P/VP']
+    LPA = data_fundamentos.loc[ticker]['Cotacao'] / \
+        data_fundamentos.loc[ticker]['P/L']
+    VPA = data_fundamentos.loc[ticker]['Cotacao'] / \
+        data_fundamentos.loc[ticker]['P/VP']
     N_acoes = int(data_fundamentos.loc[ticker]['Pat.Liq']/VPA)
     Lucro_Liquido = int(N_acoes * LPA)
-    Payout = data_fundamentos.loc[ticker]['DY']*data_fundamentos.loc[ticker]['P/L']
-
+    Payout = data_fundamentos.loc[ticker]['DY'] * \
+        data_fundamentos.loc[ticker]['P/L']
     data_useful = {
         'DY': data_fundamentos.loc[ticker]['DY'],
         'PatrimonioLiq': data_fundamentos.loc[ticker]['Pat.Liq'],
@@ -132,11 +144,12 @@ def fetch_ativo(ticker, data_fundamentos):
         'LucroLiq': Lucro_Liquido,
         'Payout': Payout,
         'MargemLiq': data_fundamentos.loc[ticker]['Mrg.Liq.'],
-        'Cres5': data_fundamentos.loc[ticker]['Cresc.5anos']
+        'Cres5': data_fundamentos.loc[ticker]['Cresc.5anos'],
+        'isbank': getBank(ticker)
     }
-    
+
     return data_useful
-    
+
 
 def update_sql():
     acoes_df = get_data()
@@ -152,8 +165,10 @@ def update_sql():
             acao_existente.n_acoes = dados['N_acoes']
             acao_existente.lucro_liq = dados['LucroLiq']
             acao_existente.payout = Acao.to_storage_format(dados['Payout'])
-            acao_existente.margem_liq = Acao.to_storage_format(dados['MargemLiq'])
+            acao_existente.margem_liq = Acao.to_storage_format(
+                dados['MargemLiq'])
             acao_existente.cres5 = Acao.to_storage_format(dados['Cres5'])
+            acao_existente.isbank = dados['isbank']
             acao_existente.last_updated = datetime.utcnow()
         else:
             acao = Acao(
@@ -167,13 +182,9 @@ def update_sql():
                 lucro_liq=dados['LucroLiq'],
                 payout=Acao.to_storage_format(dados['Payout']),
                 margem_liq=Acao.to_storage_format(dados['MargemLiq']),
-                cres5=Acao.to_storage_format(dados['Cres5'])
+                cres5=Acao.to_storage_format(dados['Cres5']),
+                isbank=dados['isbank']
             )
             db.session.add(acao)
-    
+
     db.session.commit()
-
-
-    
-
-

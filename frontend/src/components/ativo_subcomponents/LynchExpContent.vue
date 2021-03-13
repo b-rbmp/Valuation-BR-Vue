@@ -33,15 +33,15 @@
                 <b-card-text class="lead">{{ preco_lucro.toFixed(2) }}</b-card-text>
               </b-card>
               <b-card header="ROE" header-tag="header" header-class="mb-0">
-                <b-card-text class="lead">{{ roe.toFixed(2) }} %</b-card-text>
+                <b-card-text class="lead">{{ (roe*100).toFixed(2) }} %</b-card-text>
               </b-card>
             </b-card-group>
             <b-card-group deck class="mb-3">
               <b-card header="Payout" header-tag="header" header-class="mb-0">
-                <b-card-text class="lead">{{ payout.toFixed(2) }} %</b-card-text>
+                <b-card-text class="lead">{{ (payout*100).toFixed(2) }} %</b-card-text>
               </b-card>
               <b-card header="Dividend Yield" header-tag="header" header-class="mb-0">
-                <b-card-text class="lead">{{ dividend_yield.toFixed(2) }} %</b-card-text>
+                <b-card-text class="lead">{{ (dividend_yield*100).toFixed(2) }} %</b-card-text>
               </b-card>
             </b-card-group>
           </b-card-body>

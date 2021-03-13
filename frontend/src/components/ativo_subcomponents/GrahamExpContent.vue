@@ -22,14 +22,14 @@
                 header-tag="header"
                 header-class="mb-0"
               >
-                <b-card-text class="lead">R$ {{ lpa.toFixed(2) }}</b-card-text>
+                <b-card-text class="lead">{{ formatter.format(lpa) }}</b-card-text>
               </b-card>
               <b-card
                 header="VPA (Valor patrimonial da Ação)"
                 header-tag="header"
                 header-class="mb-0"
               >
-                <b-card-text class="lead">R$ {{ vpa.toFixed(2) }}</b-card-text>
+                <b-card-text class="lead">{{ formatter.format(vpa) }}</b-card-text>
               </b-card>
             </b-card-group>
           </b-card-body>
@@ -40,8 +40,16 @@
 </template>
 
 <script>
+// eslint-disable-next-line import/extensions
+import Util from '../util.js';
+
 export default {
   name: 'GrahamExpContent',
+  data() {
+    return {
+      formatter: Util.formatter,
+    };
+  },
   props: {
     lpa: Number,
     vpa: Number,

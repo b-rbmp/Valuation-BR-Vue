@@ -63,7 +63,13 @@ export default {
   methods: {
     searchAtivo() {
       if (this.ativos.includes(this.ativo.toUpperCase())) {
-        this.$router.push({ name: 'Ativo', params: { ativo: this.ativo.toUpperCase() } });
+        if (this.$route.params.ativo) {
+          if (this.$route.params.ativo.toUpperCase() !== this.ativo.toUpperCase()) {
+            this.$router.push({ name: 'Ativo', params: { ativo: this.ativo.toUpperCase() } });
+          }
+        } else {
+          this.$router.push({ name: 'Ativo', params: { ativo: this.ativo.toUpperCase() } });
+        }
       } else {
         alert('Ativo não encontrado'); // @TODO, fazer com popover
       }

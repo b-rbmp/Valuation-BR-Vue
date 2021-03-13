@@ -20,18 +20,24 @@
             </b-card-text>
             <b-card-group deck class="mb-3">
               <b-card header="Patrimônio Líquido" header-tag="header" header-class="mb-0">
-                <b-card-text class="lead">R$ {{ patr_liquido.toFixed(2) }} Mi</b-card-text>
+                <b-card-text class="lead"
+                  >{{ formatter.format(patr_liquido / 1000000) }} Mi</b-card-text
+                >
               </b-card>
               <b-card header="Receita Líquida" header-tag="header" header-class="mb-0">
-                <b-card-text class="lead">R$ {{ receita_liquida.toFixed(2) }} Mi</b-card-text>
+                <b-card-text class="lead"
+                  >{{ formatter.format(receita_liquida / 1000000) }} Mi</b-card-text
+                >
               </b-card>
             </b-card-group>
             <b-card-group deck class="mb-3">
               <b-card header="Resultado Não Operacional" header-tag="header" header-class="mb-0">
-                <b-card-text class="lead">R$ {{ rno.toFixed(2) }} Mi</b-card-text>
+                <b-card-text class="lead">{{ formatter.format(rno / 1000000) }} Mi</b-card-text>
               </b-card>
               <b-card header="Lucro Líquido" header-tag="header" header-class="mb-0">
-                <b-card-text class="lead">R$ {{ lucro_liquido.toFixed(2) }} Mi</b-card-text>
+                <b-card-text class="lead"
+                  >{{ formatter.format(lucro_liquido / 1000000) }} Mi</b-card-text
+                >
               </b-card>
             </b-card-group>
             <b-card-group deck class="mb-3">
@@ -50,8 +56,16 @@
 </template>
 
 <script>
+// eslint-disable-next-line import/extensions
+import Util from '../util.js';
+
 export default {
   name: 'PsbeExpContent',
+  data() {
+    return {
+      formatter: Util.formatter,
+    };
+  },
   props: {
     patr_liquido: Number,
     receita_liquida: Number,

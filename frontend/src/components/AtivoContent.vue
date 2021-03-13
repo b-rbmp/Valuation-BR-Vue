@@ -1,7 +1,7 @@
 <template>
   <div class="ativo-content">
-    <div id="conditionalShowing" v-if="ativos != null">
-      <b-container v-if="existAtivo()">
+    <div id="conditionalShowing" v-if="ativoInfo.status != 'loading'">
+      <b-container v-if="ativoInfo.status == 'success'">
         <b-row class="justify-content-center">
           <b-col class="display-4 text-center pt-3">
             Valuation de <b-badge pill variant="dark"> {{ $route.params.ativo }} </b-badge>
@@ -13,19 +13,27 @@
             <b-tab title="Graham" :title-link-class="linkClass(0)" active>
               <b-container>
                 <b-row class="justify-content-center">
-                  <span class="display-4 method-title text-center">Método de Graham</span>
+                  <span class="display-4 method-title text-center">Método de Graham (Valor)</span>
                 </b-row>
                 <b-row class="justify-content-center">
-                  <results-content :preco_justo="1.0" :cotacao_atual="1.53" :upside="51.2" />
+                  <results-content
+                    :preco_justo="ativoInfo.preco_graham"
+                    :cotacao_atual="ativoInfo.cotacao"
+                    :upside="ativoInfo.upside_graham"
+                  />
                 </b-row>
                 <b-row class="justify-content-center">
-                  <graham-exp-content :lpa="1.4" :vpa="1" />
+                  <graham-exp-content
+                    :lpa="ativoInfo.stockdata.lpa"
+                    :vpa="ativoInfo.stockdata.vpa"
+                  />
                 </b-row>
                 <b-row class="justify-content-center">
                   <grafico-content
-                    :precoJusto="100"
-                    :graphData="1"
+                    :precoJusto="ativoInfo.preco_graham"
+                    :graphData="ativoInfo.historico"
                     :stockName="$route.params.ativo"
+                    plotId="grahamPlot"
                   />
                 </b-row>
               </b-container>
@@ -43,18 +51,30 @@
               <b-container>
                 <b-row class="justify-content-center">
                   <span class="display-4 method-title text-center">
-                    Método de Lynch (Valor)
+                    Método de Lynch
                   </span>
                 </b-row>
                 <b-row class="justify-content-center">
-                  <results-content :preco_justo="1.0" :cotacao_atual="1.53" :upside="-51.2" />
+                  <results-content
+                    :preco_justo="ativoInfo.preco_lynch_roe"
+                    :cotacao_atual="ativoInfo.cotacao"
+                    :upside="ativoInfo.upside_lynch_roe"
+                  />
                 </b-row>
                 <b-row class="justify-content-center">
                   <lynch-exp-content
-                    :roe="59.1"
-                    :preco_lucro="14"
-                    :payout="12.4"
-                    :dividend_yield="4"
+                    :roe="ativoInfo.stockdata.roe"
+                    :preco_lucro="ativoInfo.stockdata.preco_lucro"
+                    :payout="ativoInfo.stockdata.payout"
+                    :dividend_yield="ativoInfo.stockdata.dividend_yield"
+                  />
+                </b-row>
+                <b-row class="justify-content-center">
+                  <grafico-content
+                    :precoJusto="ativoInfo.preco_lynch_roe"
+                    :graphData="ativoInfo.historico"
+                    :stockName="$route.params.ativo"
+                    plotId="lynchPlot"
                   />
                 </b-row>
               </b-container>
@@ -66,19 +86,38 @@
                     Método PSBe (Valor)
                   </span>
                 </b-row>
-                <b-row class="justify-content-center">
-                  <results-content :preco_justo="1.0" :cotacao_atual="1.53" :upside="-51.2" />
-                </b-row>
-                <b-row class="justify-content-center">
-                  <psbe-exp-content
-                    :patr_liquido="3000.12"
-                    :receita_liquida="1412.1"
-                    :rno="133.1"
-                    :lucro_liquido="1234.1"
-                    :n_acoes="95103131"
-                    :constante="5.5"
-                  />
-                </b-row>
+                <div v-if="ativoInfo.stockdata.isbank">
+                  <b-alert show variant="danger" class="mt-5 text-center">
+                    Este método não é compatível com empresas do tipo Banco
+                  </b-alert>
+                </div>
+                <div v-else>
+                  <b-row class="justify-content-center">
+                    <results-content
+                      :preco_justo="ativoInfo.preco_psbe"
+                      :cotacao_atual="ativoInfo.cotacao"
+                      :upside="ativoInfo.upside_psbe"
+                    />
+                  </b-row>
+                  <b-row class="justify-content-center">
+                    <psbe-exp-content
+                      :patr_liquido="ativoInfo.stockdata.patr_liquido"
+                      :receita_liquida="ativoInfo.stockdata.receita_liquida"
+                      :rno="0"
+                      :lucro_liquido="ativoInfo.stockdata.lucro_liquido"
+                      :n_acoes="ativoInfo.stockdata.n_acoes"
+                      :constante="5.5"
+                    />
+                  </b-row>
+                  <b-row class="justify-content-center">
+                    <grafico-content
+                      :precoJusto="ativoInfo.preco_psbe"
+                      :graphData="ativoInfo.historico"
+                      :stockName="$route.params.ativo"
+                      plotId="psbePlot"
+                    />
+                  </b-row>
+                </div>
               </b-container>
             </b-tab>
           </b-tabs>
@@ -98,6 +137,7 @@
 </template>
 
 <script>
+import { fetchAtivo } from '@/api';
 import ErroContent from './ativo_subcomponents/ErroContent.vue';
 import ResultsContent from './ativo_subcomponents/ResultsContent.vue';
 import GrahamExpContent from './ativo_subcomponents/GrahamExpContent.vue';
@@ -111,17 +151,18 @@ export default {
     return {
       ativos: null,
       tabIndex: 0,
+      ativoInfo: { status: 'loading' },
     };
   },
   methods: {
-    existAtivo() {
-      if (this.ativos) {
-        if (this.ativos.includes(this.$route.params.ativo.toUpperCase())) {
-          return true;
-        }
-        return false;
-      }
-      return false;
+    getAtivo() {
+      fetchAtivo(this.$route.params.ativo.toUpperCase())
+        .then((response) => {
+          this.ativoInfo = response.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     },
     linkClass(idx) {
       if (this.tabIndex === idx) {
@@ -131,9 +172,15 @@ export default {
     },
   },
   beforeMount() {
-    this.$store.dispatch('loadAtivos').then(() => {
-      this.ativos = this.$store.state.ativos.data.ativos;
-    });
+    this.getAtivo();
+  },
+  watch: {
+    $route(to, from) {
+      if (to !== from) {
+        this.ativoInfo.status = 'loading';
+        this.getAtivo();
+      }
+    },
   },
   components: {
     ErroContent,

@@ -19,6 +19,7 @@ class Acao(db.Model):
     payout = db.Column(db.Integer)
     margem_liq = db.Column(db.Integer)
     cres5 = db.Column(db.Integer)
+    isbank = db.Column(db.Integer)
 
     def __repr__(self):
         return '<ACAO {}>'.format(self.ticker)

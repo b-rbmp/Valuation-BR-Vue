@@ -14,26 +14,31 @@ api = Blueprint('api', __name__)
 @api.route('/ativo/<string:ativo>/', methods=('GET', 'POST'))
 def ativo(ativo):
     if request.method == 'GET':
-      response_object = { 'status': "success" }
-      preco_psbe = calculo_psbe(ativo)
-      preco_graham = calculo_graham(ativo)
-      preco_lynch_roe = calculo_lynch_ROE(ativo)
-      preco_lynch_cres = calculo_lynch_CRES(ativo)
-      cotacao = get_cotacao(ativo)
+      if get_acao(ativo) is not None:
+        response_object = { 'status': "success" }
+        preco_psbe = calculo_psbe(ativo)
+        preco_graham = calculo_graham(ativo)
+        preco_lynch_roe = calculo_lynch_ROE(ativo)
+        preco_lynch_cres = calculo_lynch_CRES(ativo)
+        cotacao = get_cotacao(ativo)
 
-      response_object['preco_psbe'] = preco_psbe
-      response_object['preco_graham'] = preco_graham
-      response_object['preco_lynch_roe'] = preco_lynch_roe
-      response_object['preco_lynch_cres'] = preco_lynch_cres
-      response_object['cotacao'] = cotacao
-      response_object['upside_psbe'] = calculo_upside(cotacao, preco_psbe)
-      response_object['upside_graham'] = calculo_upside(cotacao, preco_graham)
-      response_object['upside_lynch_roe'] = calculo_upside(cotacao, preco_lynch_roe)
-      response_object['upside_lynch_cres'] = calculo_upside(cotacao, preco_lynch_cres)
-      response_object['stockdata'] = get_used_calculated_data(ativo)
-      historico_preco = get_historico(ativo)
-      response_object['historico'] = historico_preco.to_dict()
-      return jsonify(response_object)
+        response_object['preco_psbe'] = preco_psbe
+        response_object['preco_graham'] = preco_graham
+        response_object['preco_lynch_roe'] = preco_lynch_roe
+        response_object['preco_lynch_cres'] = preco_lynch_cres
+        response_object['cotacao'] = cotacao
+        response_object['upside_psbe'] = calculo_upside(cotacao, preco_psbe)
+        response_object['upside_graham'] = calculo_upside(cotacao, preco_graham)
+        response_object['upside_lynch_roe'] = calculo_upside(cotacao, preco_lynch_roe)
+        response_object['upside_lynch_cres'] = calculo_upside(cotacao, preco_lynch_cres)
+        response_object['stockdata'] = get_used_calculated_data(ativo)
+        historico_preco = get_historico(ativo)
+        response_object['historico'] = historico_preco.to_dict()
+        return jsonify(response_object)
+      else:
+        response_object = { 'status': '404' }
+        return jsonify(response_object)
+
     elif request.method == 'POST':
       response_object = { 'status': "success" }
       return jsonify(response_object)

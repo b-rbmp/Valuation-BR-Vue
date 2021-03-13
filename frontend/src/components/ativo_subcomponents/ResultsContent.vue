@@ -11,7 +11,7 @@
         align="center"
         header-class="card-title"
       >
-        <b-card-text class="lead card-text">R$ {{ cotacao_atual.toFixed(2) }}</b-card-text>
+        <b-card-text class="lead card-text">{{ formatter.format(cotacao_atual) }}</b-card-text>
       </b-card>
 
       <b-card
@@ -24,7 +24,7 @@
         align="center"
         header-class="card-title"
       >
-        <b-card-text class="lead card-text">R$ {{ preco_justo.toFixed(2) }}</b-card-text>
+        <b-card-text class="lead card-text">{{ formatter.format(preco_justo) }}</b-card-text>
       </b-card>
 
       <b-card
@@ -47,8 +47,16 @@
 </template>
 
 <script>
+// eslint-disable-next-line import/extensions
+import Util from '../util.js';
+
 export default {
   name: 'ResultsContent',
+  data() {
+    return {
+      formatter: Util.formatter,
+    };
+  },
   props: {
     preco_justo: Number,
     cotacao_atual: Number,
