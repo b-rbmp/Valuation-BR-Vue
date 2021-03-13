@@ -64,7 +64,10 @@ export default {
               step: 'year',
               stepmode: 'backward',
             },
-            { step: 'all' },
+            {
+              step: 'all',
+              label: 'tudo',
+            },
           ],
         },
         type: 'date',
