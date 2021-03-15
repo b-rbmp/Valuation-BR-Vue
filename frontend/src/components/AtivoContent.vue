@@ -149,7 +149,6 @@ export default {
   name: 'AtivoContent',
   data() {
     return {
-      ativos: null,
       tabIndex: 0,
       ativoInfo: { status: 'loading' },
     };

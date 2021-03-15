@@ -23,13 +23,15 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <!-- Center aligned nav items -->
-        <b-nav-form class="ml-auto my-2 my-lg-0 justify-content-center mr-lg-4">
-          <b-form-input
-            size="md"
-            class="mr-lg-2 col-12 col-lg-7"
-            placeholder="VIVT3"
+        <b-nav-form class="ml-auto my-2 my-lg-0 justify-content-center mr-lg-5" v-if="ativos">
+          <vue-bootstrap-typeahead
+            :data="ativos.ativos"
             v-model="ativo"
-          ></b-form-input>
+            class="col-12 col-lg-8"
+            placeholder="VIVT3"
+            @hit="searchAtivo"
+          >
+          </vue-bootstrap-typeahead>
           <b-button
             size="md"
             type="submit"
@@ -49,7 +51,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import VueBootstrapTypeahead from 'vue-bootstrap-typeahead';
 
 import CustomNavItem from './nav_subcomponents/CustomNavItem.vue';
 
@@ -62,27 +64,26 @@ export default {
   },
   methods: {
     searchAtivo() {
-      if (this.ativos.includes(this.ativo.toUpperCase())) {
-        if (this.$route.params.ativo) {
-          if (this.$route.params.ativo.toUpperCase() !== this.ativo.toUpperCase()) {
-            this.$router.push({ name: 'Ativo', params: { ativo: this.ativo.toUpperCase() } });
-          }
-        } else {
+      if (this.$route.params.ativo) {
+        if (this.$route.params.ativo.toUpperCase() !== this.ativo.toUpperCase()) {
           this.$router.push({ name: 'Ativo', params: { ativo: this.ativo.toUpperCase() } });
         }
       } else {
-        alert('Ativo não encontrado'); // @TODO, fazer com popover
+        this.$router.push({ name: 'Ativo', params: { ativo: this.ativo.toUpperCase() } });
       }
     },
   },
-  computed: mapState({
-    ativos: (state) => state.ativos.data.ativos,
-  }),
   beforeMount() {
     this.$store.dispatch('loadAtivos');
   },
+  computed: {
+    ativos() {
+      return this.$store.state.ativos.data;
+    },
+  },
   components: {
     CustomNavItem,
+    VueBootstrapTypeahead,
   },
 };
 </script>
