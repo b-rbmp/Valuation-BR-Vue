@@ -53,30 +53,71 @@
                   <span class="display-4 method-title text-center">
                     Método de Lynch
                   </span>
+                  <span class="text-center lead ml-5 mr-3 my-2">
+                    CRES
+                  </span>
+                  <b-form-checkbox
+                    v-model="switchRoe"
+                    class="my-2"
+                    name="check-roe"
+                    size="lg"
+                    checked
+                    switch
+                  >
+                  </b-form-checkbox>
+                  <span class="text-center lead my-2 ml-2">
+                    ROE
+                  </span>
                 </b-row>
-                <b-row class="justify-content-center">
-                  <results-content
-                    :preco_justo="ativoInfo.preco_lynch_roe"
-                    :cotacao_atual="ativoInfo.cotacao"
-                    :upside="ativoInfo.upside_lynch_roe"
-                  />
-                </b-row>
-                <b-row class="justify-content-center">
-                  <lynch-exp-content
-                    :roe="ativoInfo.stockdata.roe"
-                    :preco_lucro="ativoInfo.stockdata.preco_lucro"
-                    :payout="ativoInfo.stockdata.payout"
-                    :dividend_yield="ativoInfo.stockdata.dividend_yield"
-                  />
-                </b-row>
-                <b-row class="justify-content-center">
-                  <grafico-content
-                    :precoJusto="ativoInfo.preco_lynch_roe"
-                    :graphData="ativoInfo.historico"
-                    :stockName="$route.params.ativo"
-                    plotId="lynchPlot"
-                  />
-                </b-row>
+                <div v-if="switchRoe">
+                  <b-row class="justify-content-center">
+                    <results-content
+                      :preco_justo="ativoInfo.preco_lynch_roe"
+                      :cotacao_atual="ativoInfo.cotacao"
+                      :upside="ativoInfo.upside_lynch_roe"
+                    />
+                  </b-row>
+                  <b-row class="justify-content-center">
+                    <lynch-exp-content
+                      :roe="ativoInfo.stockdata.roe"
+                      :preco_lucro="ativoInfo.stockdata.preco_lucro"
+                      :payout="ativoInfo.stockdata.payout"
+                      :dividend_yield="ativoInfo.stockdata.dividend_yield"
+                    />
+                  </b-row>
+                  <b-row class="justify-content-center">
+                    <grafico-content
+                      :precoJusto="ativoInfo.preco_lynch_roe"
+                      :graphData="ativoInfo.historico"
+                      :stockName="$route.params.ativo"
+                      plotId="lynchPlot"
+                    />
+                  </b-row>
+                </div>
+                <div v-else>
+                  <b-row class="justify-content-center">
+                    <results-content
+                      :preco_justo="ativoInfo.preco_lynch_cres"
+                      :cotacao_atual="ativoInfo.cotacao"
+                      :upside="ativoInfo.upside_lynch_cres"
+                    />
+                  </b-row>
+                  <b-row class="justify-content-center">
+                    <lynch-exp-content-cres
+                      :crescimento="ativoInfo.stockdata.cres5anos"
+                      :preco_lucro="ativoInfo.stockdata.preco_lucro"
+                      :dividend_yield="ativoInfo.stockdata.dividend_yield"
+                    />
+                  </b-row>
+                  <b-row class="justify-content-center">
+                    <grafico-content
+                      :precoJusto="ativoInfo.preco_lynch_cres"
+                      :graphData="ativoInfo.historico"
+                      :stockName="$route.params.ativo"
+                      plotId="lynchPlotCres"
+                    />
+                  </b-row>
+                </div>
               </b-container>
             </b-tab>
             <b-tab title="PSBe" :title-link-class="linkClass(3)">
@@ -144,6 +185,7 @@ import GrahamExpContent from './ativo_subcomponents/GrahamExpContent.vue';
 import LynchExpContent from './ativo_subcomponents/LynchExpContent.vue';
 import PsbeExpContent from './ativo_subcomponents/PsbeExpContent.vue';
 import GraficoContent from './ativo_subcomponents/GraficoContent.vue';
+import LynchExpContentCres from './ativo_subcomponents/LynchExpContentCres.vue';
 
 export default {
   name: 'AtivoContent',
@@ -151,6 +193,7 @@ export default {
     return {
       tabIndex: 0,
       ativoInfo: { status: 'loading' },
+      switchRoe: true,
     };
   },
   methods: {
@@ -188,6 +231,7 @@ export default {
     LynchExpContent,
     PsbeExpContent,
     GraficoContent,
+    LynchExpContentCres,
   },
 };
 </script>
