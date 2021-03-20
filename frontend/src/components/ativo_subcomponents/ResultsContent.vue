@@ -38,7 +38,7 @@
         header-class="card-title"
       >
         <b-card-text class="card-text lead"
-          ><span :class="upsideClass()" :data-icon="upsideIcon()" data-inline="false"> </span>
+          ><span :class="upsideClass" :data-icon="upsideIcon" data-inline="false"> </span>
           {{ upside.toFixed(2) }} %</b-card-text
         >
       </b-card>
@@ -62,7 +62,7 @@ export default {
     cotacao_atual: Number,
     upside: Number,
   },
-  methods: {
+  computed: {
     upsideIcon() {
       if (this.upside > 0) {
         return 'ic:baseline-keyboard-arrow-up';

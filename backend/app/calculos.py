@@ -53,7 +53,7 @@ def calculo_lynch_ROE(ticker):
         dividend_yield = Acao.to_real_format(acao.dy)
         crescimento = (1-Acao.to_real_format(acao.payout))*Acao.to_real_format(acao.roe) # Calculo de crescimento usando (1-Payout)*ROE.
         preco_justo = 0
-        if (crescimento + dividend_yield) != 0:
+        if (crescimento + dividend_yield) > 0:
             pegy = su.get_precolucro(ticker, Acao.to_real_format(acao.lpa))/((crescimento + dividend_yield)*100)
             preco_justo = su.get_cotacao(ticker)/pegy
         return round(preco_justo, 2)
@@ -66,7 +66,7 @@ def calculo_lynch_CRES(ticker):
         dividend_yield = Acao.to_real_format(acao.dy)
         crescimento = Acao.to_real_format(acao.cres5) # Calculo de crescimento usando Crescimento 5a (ver se uso CAGR 5A)
         preco_justo = 0
-        if (crescimento + dividend_yield) != 0:
+        if (crescimento + dividend_yield) > 0:
             pegy = su.get_precolucro(ticker, Acao.to_real_format(acao.lpa))/((crescimento + dividend_yield)*100)
             preco_justo = su.get_cotacao(ticker)/pegy
         return round(preco_justo, 2)

@@ -86,6 +86,7 @@
                       :cotacao_atual="ativoInfo.cotacao"
                       :upside="ativoInfo.upside_lynch_roe"
                       class="col-12 col-lg-9"
+                      key="results-roe"
                     />
                   </b-row>
                   <b-row class="justify-content-center">
@@ -114,6 +115,7 @@
                       :cotacao_atual="ativoInfo.cotacao"
                       :upside="ativoInfo.upside_lynch_cres"
                       class="col-12 col-lg-9"
+                      key="results-cres"
                     />
                   </b-row>
                   <b-row class="justify-content-center">
