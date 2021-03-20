@@ -1,5 +1,5 @@
 <template>
-  <div class="lynch-exp-content mt-4 col-lg-9 col-12">
+  <div class="lynch-exp-content mt-4 col-12">
     <div class="accordion" role="tablist">
       <b-card no-body class="mb-1">
         <b-card-header header-tag="header" class="p-1" role="tab">
@@ -22,11 +22,11 @@
               Além do crescimento, que nesta opção é calculado usando o ROE e o Payout da empresa ,
               foi levado também em consideração o dividend yield, sendo então a fórmula final:
             </b-card-text>
-            <b-card-text>
-              PEG = Preço/Lucro / (ROE*(1-Payout) + Dividend_Yield)
+            <b-card-text class="text-center">
+              <img class="img-fluid" src="@/assets/svg/Lynch_ROE_PEG.svg" />
             </b-card-text>
-            <b-card-text>
-              Preco Justo = Preco Atual/(PEG)
+            <b-card-text class="text-center">
+              <img class="img-fluid" src="@/assets/svg/Lynch.svg" />
             </b-card-text>
             <b-card-group deck class="mb-3">
               <b-card header="Preço/Lucro" header-tag="header" header-class="mb-0">

@@ -3,18 +3,18 @@ import math
 import numpy as np
 from .models import Acao
 
-def calculo_dcf(lpa, anos_prev, g_prev, g_term, taxa_desconto):
-    taxa_desconto = float(taxa_desconto)*1.0/100
-    g_term = float(g_term)*1.0/100
-    g_prev = float(g_prev)*1.0/100
-    lpa = float(lpa)
-    valor_justo = 0.0
-    for i in range(0, anos_prev):
-        valor_justo = valor_justo + lpa*((1+g_prev)**(i+1))/((1+taxa_desconto)**(i+1))
-    valor_justo = valor_justo + lpa*((1+g_prev)**(anos_prev))/((1+taxa_desconto)**(anos_prev))*(1+g_term)/(taxa_desconto-g_term)
-    return round(valor_justo, 2)
+# Desativado pois calculo realizado no front-end
+# def calculo_dcf(lpa, anos_prev, g_prev, g_term, taxa_desconto):
+#     taxa_desconto = float(taxa_desconto)*1.0/100
+#     g_term = float(g_term)*1.0/100
+#     g_prev = float(g_prev)*1.0/100
+#     lpa = float(lpa)
+#     valor_justo = 0.0
+#     for i in range(0, anos_prev):
+#         valor_justo = valor_justo + lpa*((1+g_prev)**(i+1))/((1+taxa_desconto)**(i+1))
+#     valor_justo = valor_justo + lpa*((1+g_prev)**(anos_prev))/((1+taxa_desconto)**(anos_prev))*(1+g_term)/(taxa_desconto-g_term)
+#     return round(valor_justo, 2)
 
-# Dando erro pros bancos pois ta sem margem liquida
 def calculo_psbe(ticker):
     acao = su.get_acao(ticker)
     if acao is not None:
@@ -28,7 +28,7 @@ def calculo_psbe(ticker):
         # @TODO CRIAR METODO P CALCULAR A CONSTANTE VMCM FAZENDO UM BEST FIT DESSA CONSTANTE, QUE É BASICAMENTE COMPARAR O PREÇO JUSTO COM A COTAÇÃO E FAZER O BEST FIT, LEMBRANDO
         # DE APENAS FAZER PARA EMPRESAS COM LUCRO LIQUIDO POSITIVO
         preco_justo = 0
-        if margem_liq != 0:
+        if margem_liq > 0:
             preco_justo = (patr_liq+rec_liq+rec_naoop+((lucro_liq-rec_naoop)*math.exp(margem_liq*(-math.log(margem_liq))*constant_VMCM*np.sign(margem_liq))))/n_acoes
         return round(preco_justo, 2)
     else:
@@ -39,7 +39,9 @@ def calculo_graham(ticker):
     if acao is not None:
         lpa = Acao.to_real_format(acao.lpa)
         vpa = Acao.to_real_format(acao.vpa)
-        preco_justo = math.sqrt(22.5*lpa*vpa)
+        preco_justo = 0
+        if lpa >= 0 and vpa >= 0:
+            preco_justo = math.sqrt(22.5*lpa*vpa)
         return round(preco_justo, 2)
     else:
         return 0

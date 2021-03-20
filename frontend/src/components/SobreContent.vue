@@ -35,8 +35,8 @@
                         Earnings * Growth) a 1 para descobrir o preço justo de uma empresa.
                       </p>
                       <p>
-                        Neste site, foram utilizados duas medidas de crescimento diferentes : O CAGR
-                        Lucro Líquido de 5 anos e o (1-Payout)*ROE.
+                        Neste site, foram utilizados duas medidas de crescimento diferentes : O
+                        crescimento médio da receita líquida em 5 anos e o (1-Payout)*ROE.
                       </p>
                       <p>
                         É claro que esta regra de bolso era utilizada por Peter Lynch para realizar
@@ -71,11 +71,9 @@
                       </p>
                       <p>
                         Existem diversos modelos de DCF, sendo o método mais utilizado pelos
-                        analistas para realizar o valuation de empresas. Neste site, por motivos de
-                        simplificação, limita-se o DCF ao modelo de 2 estágios (1 estágio "atual" +
-                        1 estágio terminal), e utiliza-se o lucro líquido como um proxy do fluxo de
-                        caixa livre gerado pela empresa, apesar de esta abordagem distorcer os
-                        resultados.
+                        analistas para realizar o valuation de empresas. Neste site utiliza-se o
+                        lucro líquido como um proxy do fluxo de caixa livre gerado pela empresa,
+                        apesar de esta abordagem distorcer os resultados.
                       </p>
                     </b-card-text>
                   </b-card-body>

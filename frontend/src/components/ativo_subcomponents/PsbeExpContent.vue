@@ -1,5 +1,5 @@
 <template>
-  <div class="psbe-exp-content mt-4 col-lg-9 col-12">
+  <div class="psbe-exp-content mt-4 col-12">
     <div class="accordion" role="tablist">
       <b-card no-body class="mb-1">
         <b-card-header header-tag="header" class="p-1" role="tab">
@@ -16,9 +16,12 @@
               bolsa e o seu valor de mercado
             </b-card-text>
             <b-card-text>
-              Preço Justo = @TODO
+              A formula para o cálculo segundo o método PSBe é a seguinte:
             </b-card-text>
-            <b-card-group deck class="mb-3">
+            <b-card-text class="text-center">
+              <img class="img-fluid" src="@/assets/svg/PSBe.svg" />
+            </b-card-text>
+            <b-card-group deck class="my-3">
               <b-card header="Patrimônio Líquido" header-tag="header" header-class="mb-0">
                 <b-card-text class="lead"
                   >{{ formatter.format(patr_liquido / 1000000) }} Mi</b-card-text
@@ -48,6 +51,11 @@
                 <b-card-text class="lead">{{ constante.toFixed(2) }}</b-card-text>
               </b-card>
             </b-card-group>
+            <b-card-group deck class="mb-3">
+              <b-card header="Margem Líquida" header-tag="header" header-class="mb-0">
+                <b-card-text class="lead">{{ (margem_liq * 100).toFixed(2) }} %</b-card-text>
+              </b-card>
+            </b-card-group>
           </b-card-body>
         </b-collapse>
       </b-card>
@@ -73,6 +81,7 @@ export default {
     lucro_liquido: Number,
     n_acoes: Number,
     constante: Number,
+    margem_liq: Number,
   },
 };
 </script>

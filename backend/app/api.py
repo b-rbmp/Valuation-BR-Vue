@@ -5,7 +5,7 @@ api.py
 """
 from flask import Blueprint, jsonify, request
 from .stock_api_wrapper import update_sql
-from .calculos import calculo_dcf, calculo_graham, calculo_lynch_ROE, calculo_lynch_CRES, calculo_psbe, calculo_upside
+from .calculos import calculo_graham, calculo_lynch_ROE, calculo_lynch_CRES, calculo_psbe, calculo_upside
 from .stock_util import get_cotacao, get_acao, get_historico, get_used_calculated_data
 from .models import Acao
 
@@ -14,7 +14,8 @@ api = Blueprint('api', __name__)
 @api.route('/ativo/<string:ativo>/', methods=('GET', 'POST'))
 def ativo(ativo):
     if request.method == 'GET':
-      if get_acao(ativo) is not None:
+      ativoFound = get_acao(ativo)
+      if ativoFound is not None and Acao.to_real_format(ativoFound.lpa) > 0 and Acao.to_real_format(ativoFound.vpa) > 0 :
         response_object = { 'status': "success" }
         preco_psbe = calculo_psbe(ativo)
         preco_graham = calculo_graham(ativo)

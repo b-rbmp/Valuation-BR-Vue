@@ -1,5 +1,5 @@
 <template>
-  <div class="graham-exp-content mt-4 col-lg-9 col-12">
+  <div class="graham-exp-content mt-4 col-12">
     <div class="accordion" role="tablist">
       <b-card no-body class="mb-1">
         <b-card-header header-tag="header" class="p-1" role="tab">
@@ -13,8 +13,8 @@
               A fórmula de Benjamin Graham permite calcular o valor intrínsico de uma ação, através
               da seguinte fórmula:
             </b-card-text>
-            <b-card-text>
-              Preço Justo = Raiz Quadrada (22,5 * Lucro Por Ação * Valor Patrimonial da Ação)
+            <b-card-text class="text-center">
+              <img class="img-fluid" src="@/assets/svg/Graham.svg" />
             </b-card-text>
             <b-card-group deck>
               <b-card

@@ -41,6 +41,9 @@
             >Procurar</b-button
           >
         </b-nav-form>
+        <b-alert v-else>
+          Erro
+        </b-alert>
         <!-- Right aligned nav items -->
         <b-navbar-nav class="text-center ml-lg-auto my-2 my-lg-0 justify-content-center">
           <custom-nav-item texto="Sobre" view="/sobre" />

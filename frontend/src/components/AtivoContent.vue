@@ -20,12 +20,14 @@
                     :preco_justo="ativoInfo.preco_graham"
                     :cotacao_atual="ativoInfo.cotacao"
                     :upside="ativoInfo.upside_graham"
+                    class="col-12 col-lg-9"
                   />
                 </b-row>
                 <b-row class="justify-content-center">
                   <graham-exp-content
                     :lpa="ativoInfo.stockdata.lpa"
                     :vpa="ativoInfo.stockdata.vpa"
+                    class="col-12 col-lg-9"
                   />
                 </b-row>
                 <b-row class="justify-content-center">
@@ -33,6 +35,7 @@
                     :precoJusto="ativoInfo.preco_graham"
                     :graphData="ativoInfo.historico"
                     :stockName="$route.params.ativo"
+                    class="col-12 col-lg-9"
                     plotId="grahamPlot"
                   />
                 </b-row>
@@ -44,6 +47,13 @@
                   <span class="display-4 method-title text-center">
                     Método de Fluxo de Caixa Descontado com LPA (DCF-LPA)
                   </span>
+                </b-row>
+                <b-row class="justify-content-center">
+                  <dcf-form
+                    :lpa_real="ativoInfo.stockdata.lpa"
+                    :cotacao_atual="ativoInfo.cotacao"
+                    :historico="ativoInfo.historico"
+                  />
                 </b-row>
               </b-container>
             </b-tab>
@@ -75,6 +85,7 @@
                       :preco_justo="ativoInfo.preco_lynch_roe"
                       :cotacao_atual="ativoInfo.cotacao"
                       :upside="ativoInfo.upside_lynch_roe"
+                      class="col-12 col-lg-9"
                     />
                   </b-row>
                   <b-row class="justify-content-center">
@@ -83,6 +94,7 @@
                       :preco_lucro="ativoInfo.stockdata.preco_lucro"
                       :payout="ativoInfo.stockdata.payout"
                       :dividend_yield="ativoInfo.stockdata.dividend_yield"
+                      class="col-12 col-lg-9"
                     />
                   </b-row>
                   <b-row class="justify-content-center">
@@ -91,6 +103,7 @@
                       :graphData="ativoInfo.historico"
                       :stockName="$route.params.ativo"
                       plotId="lynchPlot"
+                      class="col-12 col-lg-9"
                     />
                   </b-row>
                 </div>
@@ -100,6 +113,7 @@
                       :preco_justo="ativoInfo.preco_lynch_cres"
                       :cotacao_atual="ativoInfo.cotacao"
                       :upside="ativoInfo.upside_lynch_cres"
+                      class="col-12 col-lg-9"
                     />
                   </b-row>
                   <b-row class="justify-content-center">
@@ -107,6 +121,7 @@
                       :crescimento="ativoInfo.stockdata.cres5anos"
                       :preco_lucro="ativoInfo.stockdata.preco_lucro"
                       :dividend_yield="ativoInfo.stockdata.dividend_yield"
+                      class="col-12 col-lg-9"
                     />
                   </b-row>
                   <b-row class="justify-content-center">
@@ -115,6 +130,7 @@
                       :graphData="ativoInfo.historico"
                       :stockName="$route.params.ativo"
                       plotId="lynchPlotCres"
+                      class="col-12 col-lg-9"
                     />
                   </b-row>
                 </div>
@@ -138,6 +154,7 @@
                       :preco_justo="ativoInfo.preco_psbe"
                       :cotacao_atual="ativoInfo.cotacao"
                       :upside="ativoInfo.upside_psbe"
+                      class="col-12 col-lg-9"
                     />
                   </b-row>
                   <b-row class="justify-content-center">
@@ -148,6 +165,8 @@
                       :lucro_liquido="ativoInfo.stockdata.lucro_liquido"
                       :n_acoes="ativoInfo.stockdata.n_acoes"
                       :constante="5.5"
+                      :margem_liq="ativoInfo.stockdata.margem_liq"
+                      class="col-12 col-lg-9"
                     />
                   </b-row>
                   <b-row class="justify-content-center">
@@ -156,6 +175,7 @@
                       :graphData="ativoInfo.historico"
                       :stockName="$route.params.ativo"
                       plotId="psbePlot"
+                      class="col-12 col-lg-9"
                     />
                   </b-row>
                 </div>
@@ -186,6 +206,7 @@ import LynchExpContent from './ativo_subcomponents/LynchExpContent.vue';
 import PsbeExpContent from './ativo_subcomponents/PsbeExpContent.vue';
 import GraficoContent from './ativo_subcomponents/GraficoContent.vue';
 import LynchExpContentCres from './ativo_subcomponents/LynchExpContentCres.vue';
+import DcfForm from './ativo_subcomponents/DcfForm.vue';
 
 export default {
   name: 'AtivoContent',
@@ -232,6 +253,7 @@ export default {
     PsbeExpContent,
     GraficoContent,
     LynchExpContentCres,
+    DcfForm,
   },
 };
 </script>

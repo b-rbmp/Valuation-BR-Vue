@@ -99,8 +99,9 @@ def get_data(*args, **kwargs):
 
     dataframe_result = pd.DataFrame(result, columns=result.keys()).transpose()
     dataframe_filtered = dataframe_result.copy()
+    # Drops stocks with zero P/L or P/VP
     for ticker in dataframe_result.index:
-        if (dataframe_result.loc[ticker]['P/L'] <= 0 or dataframe_result.loc[ticker]['P/VP'] <= 0):
+        if (dataframe_result.loc[ticker]['P/L'] == 0 or dataframe_result.loc[ticker]['P/VP'] == 0):
             dataframe_filtered.drop(index=ticker, inplace=True)
 
     return dataframe_filtered
