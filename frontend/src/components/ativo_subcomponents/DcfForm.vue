@@ -1,7 +1,7 @@
 <template>
   <div class="dcf-form mt-4 col-12">
     <b-row v-if="show" class="justify-content-center">
-      <b-form class="col-lg-9" @submit="onSubmit" @reset="onReset">
+      <b-form class="col-lg-9" @submit="onSubmit" @reset="onReset" novalidate>
         <b-card border-variant="light">
           <b-form-group
             label-cols-lg="3"
@@ -34,14 +34,21 @@
               <b-input-group prepend="R$">
                 <b-form-input
                   id="lpa-input"
-                  v-model="form.lpa"
+                  v-model="$v.form.lpa.$model"
                   step="0.01"
                   type="number"
                   lazy-formatter
                   :formatter="formatdigits"
+                  :state="!$v.form.lpa.$error"
                   number
                 ></b-form-input>
               </b-input-group>
+              <div class="error" v-if="!$v.form.lpa.required">Deve ser preenchido</div>
+              <div class="error" v-else-if="!$v.form.lpa.decimal">Deve ser número</div>
+              <div class="error" v-else-if="!$v.form.lpa.valorPositivo">Deve ser maior que 0</div>
+              <div class="error" v-else-if="!$v.form.lpa.maxValue">
+                Valor muito grande
+              </div>
             </b-form-group>
             <b-form-group
               label="Taxa de Desconto:"
@@ -53,15 +60,23 @@
               <b-input-group append="%">
                 <b-form-input
                   id="txdesconto-input"
-                  v-model="form.tx_desconto"
+                  v-model="$v.form.tx_desconto.$model"
                   step="0.01"
-                  min="0"
                   type="number"
                   lazy-formatter
                   :formatter="formatdigits"
+                  :state="!$v.form.tx_desconto.$error"
                   number
                 ></b-form-input>
               </b-input-group>
+              <div class="error" v-if="!$v.form.tx_desconto.required">Deve ser preenchido</div>
+              <div class="error" v-else-if="!$v.form.tx_desconto.decimal">Deve ser número</div>
+              <div class="error" v-else-if="!$v.form.tx_desconto.valorPositivo">
+                Deve ser maior que 0
+              </div>
+              <div class="error" v-else-if="!$v.form.tx_desconto.maxValue">
+                Valor muito grande
+              </div>
             </b-form-group>
           </b-form-group>
         </b-card>
@@ -83,14 +98,26 @@
               <b-input-group append="%">
                 <b-form-input
                   id="gperpetuidade-input"
-                  v-model="form.g_perpetuidade"
+                  v-model="$v.form.g_perpetuidade.$model"
                   step="0.01"
                   type="number"
                   lazy-formatter
                   :formatter="formatdigits"
+                  :state="!$v.form.g_perpetuidade.$error"
                   number
                 ></b-form-input>
               </b-input-group>
+              <div class="error" v-if="!$v.form.g_perpetuidade.required">Deve ser preenchido</div>
+              <div class="error" v-else-if="!$v.form.g_perpetuidade.decimal">Deve ser número</div>
+              <div class="error" v-else-if="!$v.form.g_perpetuidade.minValue">
+                Valor muito pequeno
+              </div>
+              <div class="error" v-else-if="!$v.form.g_perpetuidade.maxValue">
+                Valor muito grande
+              </div>
+              <div class="error" v-else-if="!$v.form.g_perpetuidade.smallerThanDiscount">
+                Crescimento na perpetuidade deve ser menor que a taxa de desconto
+              </div>
             </b-form-group>
           </b-form-group>
         </b-card>
@@ -113,13 +140,26 @@
                 <b-form-input
                   :id="'gestagio-' + n + '-input'"
                   step="0.01"
-                  v-model="form.vetor_g[n - 1]"
+                  v-model="$v.form.vetor_g.$each[n - 1].g.$model"
                   type="number"
                   lazy-formatter
                   :formatter="formatdigits"
+                  :state="!$v.form.vetor_g.$each[n - 1].g.$error"
                   number
                 ></b-form-input>
               </b-input-group>
+              <div class="error" v-if="!$v.form.vetor_g.$each[n - 1].g.required">
+                Deve ser preenchido
+              </div>
+              <div class="error" v-else-if="!$v.form.vetor_g.$each[n - 1].g.decimal">
+                Deve ser número
+              </div>
+              <div class="error" v-else-if="!$v.form.vetor_g.$each[n - 1].g.minValue">
+                Valor muito pequeno
+              </div>
+              <div class="error" v-else-if="!$v.form.vetor_g.$each[n - 1].g.maxValue">
+                Valor muito grande
+              </div>
             </b-form-group>
             <b-form-group
               label="Período:"
@@ -131,24 +171,39 @@
               <b-input-group append="anos">
                 <b-form-input
                   :id="'testagio-' + n + '-input'"
-                  v-model="form.vetor_anos[n - 1]"
+                  v-model="$v.form.vetor_anos.$each[n - 1].anos.$model"
                   min="1"
                   step="1"
                   type="number"
                   lazy-formatter
                   :formatter="formatinteger"
+                  :state="!$v.form.vetor_anos.$each[n - 1].anos.$error"
                   number
                 ></b-form-input>
-                <b-form-invalid-feedback :id="'testagio-' + n + '-input'">
-                  Numero de anos acima de 0
-                </b-form-invalid-feedback>
               </b-input-group>
+              <div class="error" v-if="!$v.form.vetor_anos.$each[n - 1].anos.required">
+                Deve ser preenchido
+              </div>
+              <div class="error" v-else-if="!$v.form.vetor_anos.$each[n - 1].anos.integer">
+                Deve ser inteiro
+              </div>
+              <div class="error" v-else-if="!$v.form.vetor_anos.$each[n - 1].anos.valorPositivo">
+                Deve ser positivo
+              </div>
+              <div class="error" v-else-if="!$v.form.vetor_anos.$each[n - 1].anos.maxValue">
+                Valor muito grande
+              </div>
             </b-form-group>
           </b-form-group>
         </b-card>
-        <b-row class="mt-5 justify-content-center">
+        <b-row class="justify-content-center">
+          <b-alert variant="danger" :show="errors">
+            Conserte todos os erros do formulário
+          </b-alert>
+        </b-row>
+        <b-row class="mt-4 justify-content-center">
           <b-button type="submit" class="mx-2" variant="dark">Calcular</b-button>
-          <b-button type="reset" class="mx-2" variant="danger">Resetar</b-button>
+          <b-button type="reset" class="mx-2" variant="warning">Resetar</b-button>
         </b-row>
       </b-form>
     </b-row>
@@ -181,6 +236,13 @@
             class="col-12 col-lg-9"
           />
         </b-row>
+        <b-row class="justify-content-center">
+          <div class="col-12 col-lg-9 mt-4">
+            <b-button v-on:click="onReset" block variant="warning">
+              Recalcular
+            </b-button>
+          </div>
+        </b-row>
       </div>
       <div class="col-12 col-lg-9" v-else>
         <b-row class="justify-content-center">
@@ -192,6 +254,7 @@
 </template>
 
 <script>
+import { required, decimal, integer } from 'vuelidate/lib/validators';
 import ResultsContent from './ResultsContent.vue';
 import GraficoContent from './GraficoContent.vue';
 import DcfExpContent from './DcfExpContent.vue';
@@ -205,9 +268,11 @@ export default {
   },
   data() {
     return {
-      estagios: 1,
+      errors: false,
       calculated: false,
+      show: true,
       n_anos_total: 0,
+      estagios: 1,
       resultado: {
         valor_justo: 0,
         upside: 0,
@@ -218,12 +283,19 @@ export default {
       },
       form: {
         lpa: parseFloat(this.lpa_real.toFixed(2)),
-        vetor_g: [],
-        vetor_anos: [],
+        vetor_g: [
+          {
+            g: 0,
+          },
+        ],
+        vetor_anos: [
+          {
+            anos: 0,
+          },
+        ],
         g_perpetuidade: 0,
         tx_desconto: 0,
       },
-      show: true,
     };
   },
   props: {
@@ -231,29 +303,56 @@ export default {
     cotacao_atual: Number,
     historico: Object,
   },
+  mounted() {
+    // Initialize state for the form validation logic
+    this.$v.$touch();
+  },
   methods: {
     formatdigits(value) {
-      return parseFloat(value).toFixed(2);
+      if (value) {
+        return parseFloat(parseFloat(value).toFixed(2));
+      }
+      return 0;
     },
     formatinteger(value) {
-      return parseFloat(value).toFixed(0);
+      if (value) {
+        return parseFloat(parseFloat(value).toFixed(0));
+      }
+      return 0;
     },
     onSubmit(event) {
       event.preventDefault();
-      this.calculo_dcf();
-      this.show = false;
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        this.errors = true;
+      } else {
+        this.calculo_dcf();
+        this.erros = false;
+        this.show = false;
+      }
     },
     onReset(event) {
       event.preventDefault();
       // Reset our form values
       this.estagios = 1;
       this.form.lpa = parseFloat(this.lpa_real.toFixed(2));
-      this.form.vetor_g = [];
-      this.form.vetor_anos = [];
+      this.form.vetor_g = [
+        {
+          g: 0,
+        },
+      ];
+      this.form.vetor_anos = [
+        {
+          anos: 0,
+        },
+      ];
       this.form.tx_desconto = 0;
       this.form.g_perpetuidade = 0;
       this.n_anos_total = 0;
       this.calculated = false;
+      this.errors = false;
+      // Reevaluate the state for the form
+      this.$v.$touch();
       // Trick to reset/clear native browser form validation state
       this.show = false;
       this.$nextTick(() => {
@@ -275,9 +374,9 @@ export default {
       if (this.estagios > 0) {
         for (i = 1; i <= this.estagios; i += 1) {
           let n;
-          for (n = 1; n <= this.form.vetor_anos[i - 1]; n += 1) {
+          for (n = 1; n <= this.form.vetor_anos[i - 1].anos; n += 1) {
             // eslint-disable-next-line max-len
-            this.resultado.eps[ano] = this.resultado.eps[ano - 1] * (1 + this.form.vetor_g[i - 1] / 100);
+            this.resultado.eps[ano] = this.resultado.eps[ano - 1] * (1 + this.form.vetor_g[i - 1].g / 100);
             // eslint-disable-next-line max-len
             this.resultado.npv[ano] = this.resultado.eps[ano] / (1 + this.form.tx_desconto / 100) ** ano;
             this.resultado.valor_justo += this.resultado.npv[ano];
@@ -302,7 +401,77 @@ export default {
       this.calculated = true;
     },
   },
+  validations: {
+    form: {
+      lpa: {
+        required,
+        decimal,
+        valorPositivo(value) {
+          return value > 0;
+        },
+        maxValue(value) {
+          return value < 10000;
+        },
+      },
+      g_perpetuidade: {
+        required,
+        decimal,
+        minValue(value) {
+          return value > -1000;
+        },
+        maxValue(value) {
+          return value < 1000;
+        },
+        smallerThanDiscount(value) {
+          return value < this.form.tx_desconto;
+        },
+      },
+      tx_desconto: {
+        required,
+        decimal,
+        valorPositivo(value) {
+          return value > 0;
+        },
+        maxValue(value) {
+          return value < 1000;
+        },
+      },
+      vetor_g: {
+        $each: {
+          g: {
+            required,
+            decimal,
+            minValue(value) {
+              return value > -1000;
+            },
+            maxValue(value) {
+              return value < 1000;
+            },
+          },
+        },
+      },
+      vetor_anos: {
+        $each: {
+          anos: {
+            required,
+            integer,
+            valorPositivo(value) {
+              return value > 0;
+            },
+            maxValue(value) {
+              return value <= 100;
+            },
+          },
+        },
+      },
+    },
+  },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.error {
+  color: rgb(184, 11, 11);
+  font-size: 0.8rem;
+}
+</style>
