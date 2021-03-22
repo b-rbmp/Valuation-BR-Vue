@@ -1,6 +1,6 @@
 <template>
   <div class="ativo-content">
-    <div id="conditionalShowing" v-if="ativoInfo.status != 'loading'">
+    <div id="conditionalShowing" v-if="ativoInfo.status != 'loading' && !errorLoading">
       <b-container v-if="ativoInfo.status == 'success'">
         <b-row class="justify-content-center">
           <b-col class="display-4 text-center pt-3">
@@ -186,7 +186,15 @@
           </b-tabs>
         </b-card>
       </b-container>
-      <erro-content v-else />
+      <error-page
+        title="Ativo não encontrado"
+        msg="Apenas ações que relataram lucro líquido positivo nos últimos 12 meses estão
+              disponíveis neste site."
+        v-else
+      />
+    </div>
+    <div v-else-if="errorLoading">
+      <error-backend />
     </div>
     <div v-else>
       <b-row class="justify-content-center">
@@ -201,7 +209,6 @@
 
 <script>
 import { fetchAtivo } from '@/api';
-import ErroContent from './ativo_subcomponents/ErroContent.vue';
 import ResultsContent from './ativo_subcomponents/ResultsContent.vue';
 import GrahamExpContent from './ativo_subcomponents/GrahamExpContent.vue';
 import LynchExpContent from './ativo_subcomponents/LynchExpContent.vue';
@@ -209,6 +216,7 @@ import PsbeExpContent from './ativo_subcomponents/PsbeExpContent.vue';
 import GraficoContent from './ativo_subcomponents/GraficoContent.vue';
 import LynchExpContentCres from './ativo_subcomponents/LynchExpContentCres.vue';
 import DcfForm from './ativo_subcomponents/DcfForm.vue';
+import ErrorPage from './errors/ErrorPage.vue';
 
 export default {
   name: 'AtivoContent',
@@ -217,6 +225,7 @@ export default {
       tabIndex: 0,
       ativoInfo: { status: 'loading' },
       switchRoe: true,
+      errorLoading: false,
     };
   },
   methods: {
@@ -227,6 +236,7 @@ export default {
         })
         .catch((error) => {
           console.error(error);
+          this.errorLoading = true;
         });
     },
     linkClass(idx) {
@@ -248,7 +258,6 @@ export default {
     },
   },
   components: {
-    ErroContent,
     ResultsContent,
     GrahamExpContent,
     LynchExpContent,
@@ -256,6 +265,7 @@ export default {
     GraficoContent,
     LynchExpContentCres,
     DcfForm,
+    ErrorPage,
   },
 };
 </script>

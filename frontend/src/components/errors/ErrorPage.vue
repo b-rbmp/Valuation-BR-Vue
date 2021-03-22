@@ -1,10 +1,10 @@
 <template>
-  <div class="erro-content">
+  <div class="error-alert">
     <b-container>
       <b-row class="justify-content-center">
         <b-col class="display-4 text-center">
           <b-alert variant="danger" show>
-            Ativo não encontrado
+            {{ title }}
           </b-alert>
         </b-col>
       </b-row>
@@ -13,8 +13,7 @@
         <div class="col-12 col-lg-9 text-center mt-2 mb-5">
           <div class="text-wrap lead">
             <span>
-              Apenas ações que relataram lucro líquido positivo nos últimos 12 meses estão
-              disponíveis neste site.
+              {{ msg }}
             </span>
           </div>
         </div>
@@ -25,7 +24,11 @@
 
 <script>
 export default {
-  name: 'ErroContent',
+  name: 'ErrorBackend',
+  props: {
+    title: String,
+    msg: String,
+  },
 };
 </script>
 

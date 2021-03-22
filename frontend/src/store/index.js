@@ -10,20 +10,28 @@ export default new Vuex.Store({
   state: {
     // Single sources of Truth
     ativos: [],
+    errored: false,
   },
   mutations: {
     setAtivos(state, payload) {
       state.ativos = payload.ativos;
+    },
+    setError(state, payload) {
+      state.errored = payload.hasError;
     },
   },
   actions: {
     // Asynchronous actions
     loadAtivos(context) {
       return fetchAtivos()
-        .then((response) => context.commit('setAtivos', { ativos: response }))
-        .catch(() => {
+        .then((response) => {
+          context.commit('setAtivos', { ativos: response });
+          context.commit('setError', { hasError: false });
+        })
+        .catch((error) => {
           // Error
-          alert('Um erro ocorreu, tente novamente mais tarde'); // @TODO
+          console.error(error);
+          context.commit('setError', { hasError: true });
         });
     },
   },
