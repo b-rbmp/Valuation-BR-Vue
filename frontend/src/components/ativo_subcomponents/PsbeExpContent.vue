@@ -21,6 +21,10 @@
             <b-card-text class="text-center">
               <img class="img-fluid" src="@/assets/svg/PSBe.svg" />
             </b-card-text>
+            <b-card-text>
+              No momento, o resultado não operacional está sendo considerado como zero, mesmo se
+              este não seja zero.
+            </b-card-text>
             <b-card-group deck class="my-3">
               <b-card header="Patrimônio Líquido" header-tag="header" header-class="mb-0">
                 <b-card-text class="lead"
