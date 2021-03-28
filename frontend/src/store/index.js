@@ -28,7 +28,7 @@ export default new Vuex.Store({
           context.commit('setAtivos', { ativos: response });
           context.commit('setError', { hasError: false });
         })
-        .catch((error) => {
+        .catch(() => {
           // Error
           context.commit('setError', { hasError: true });
         });
