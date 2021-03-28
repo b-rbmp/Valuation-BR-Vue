@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from . import stock_util as su
 import math 
 import numpy as np

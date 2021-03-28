@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 __init__.py
  creates a Flask app instance and registers the database object

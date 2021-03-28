@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 api.py
 - provides the API endpoints for consuming and producing

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 models.py
 - Defines this project's models for SQL-Alchemy
