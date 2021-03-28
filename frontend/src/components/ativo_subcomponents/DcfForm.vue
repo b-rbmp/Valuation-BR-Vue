@@ -218,7 +218,7 @@
           />
         </b-row>
         <b-row class="justify-content-center">
-          <dcf-exp-content
+          <dcf-explication-content
             class="col-12 col-lg-9"
             :eps="resultado.eps"
             :npv="resultado.npv"
@@ -257,14 +257,14 @@
 import { required, decimal, integer } from 'vuelidate/lib/validators';
 import ResultsContent from './ResultsContent.vue';
 import GraficoContent from './GraficoContent.vue';
-import DcfExpContent from './DcfExpContent.vue';
+import DcfExplicationContent from './DcfExplicationContent.vue';
 
 export default {
   name: 'DcfForm',
   components: {
     ResultsContent,
     GraficoContent,
-    DcfExpContent,
+    DcfExplicationContent,
   },
   data() {
     return {

@@ -30,7 +30,6 @@ export default new Vuex.Store({
         })
         .catch((error) => {
           // Error
-          console.error(error);
           context.commit('setError', { hasError: true });
         });
     },

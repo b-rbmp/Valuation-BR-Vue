@@ -67,7 +67,7 @@
 import Plotly from 'plotly.js';
 
 export default {
-  name: 'DCFExpContent',
+  name: 'DcfExplicationContent',
   props: {
     eps: Array,
     npv: Array,
