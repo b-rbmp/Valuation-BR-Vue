@@ -234,7 +234,7 @@ export default {
         .then((response) => {
           this.ativoInfo = response.data;
         })
-        .catch((error) => {
+        .catch(() => {
           this.errorLoading = true;
         });
     },
