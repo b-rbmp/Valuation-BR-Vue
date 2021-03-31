@@ -9,11 +9,11 @@
 */**/**/*.pyc
 */**/**/**/*.pyc
 */**/**/**/**/*.pyc
-**/*.env
 env/
 dist/
 nginx/
 .vscode
 .vs
+.env
 .dockerignore
 Dockerfile
