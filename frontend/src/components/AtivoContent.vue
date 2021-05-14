@@ -194,7 +194,10 @@
       />
     </div>
     <div v-else-if="errorLoading">
-      <error-backend />
+      <error-page
+        title="Error no Database"
+        msg="Ocorreu um erro com os servidores do site. Entre em contato com o administrador"
+      />
     </div>
     <div v-else>
       <b-row class="justify-content-center">

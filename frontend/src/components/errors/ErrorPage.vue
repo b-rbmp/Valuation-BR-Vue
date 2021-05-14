@@ -24,7 +24,7 @@
 
 <script>
 export default {
-  name: 'ErrorBackend',
+  name: 'ErrorPage',
   props: {
     title: String,
     msg: String,

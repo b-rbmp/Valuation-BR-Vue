@@ -16,4 +16,5 @@ nginx/
 .vs
 .env
 .dockerignore
+.txt
 Dockerfile

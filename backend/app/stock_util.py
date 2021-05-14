@@ -50,6 +50,7 @@ def get_historico(ticker):
         historico_index_reset['date'] = historico_index_reset['date'].apply(lambda x: str(x))
         # Tirar colunas inuteis para o front-end. Depois ver como usar splits pra corrigir
         historico_drop = historico_index_reset.drop(['volume','symbol', 'open', 'close', 'dividends', 'high', 'low'], axis=1, errors='ignore')
+        historico_drop.dropna(axis=0,inplace=True)
         return historico_drop
     else: 
         return None

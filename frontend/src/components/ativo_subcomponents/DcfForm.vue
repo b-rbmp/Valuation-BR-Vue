@@ -203,7 +203,7 @@
         </b-row>
         <b-row class="mt-4 justify-content-center">
           <b-button type="submit" class="mx-2" variant="dark">Calcular</b-button>
-          <b-button type="reset" class="mx-2" variant="warning">Resetar</b-button>
+          <b-button type="reset" class="mx-2" variant="warning">Limpar</b-button>
         </b-row>
       </b-form>
     </b-row>
@@ -302,6 +302,16 @@ export default {
     lpa_real: Number,
     cotacao_atual: Number,
     historico: Object,
+  },
+  beforeUpdate() {
+    if (this.estagios > this.form.vetor_g.length) {
+      this.form.vetor_g.push({ g: 0 });
+      this.form.vetor_anos.push({ anos: 0 });
+    } else if (this.estagios < this.form.vetor_g.length) {
+      this.form.vetor_g.pop();
+      this.form.vetor_anos.pop();
+    }
+    this.$v.$touch();
   },
   mounted() {
     // Initialize state for the form validation logic
