@@ -87,8 +87,7 @@ export default {
 
 <style scoped>
 .card-indicator {
-  min-width: 12rem;
-  max-width: 20rem;
+  max-width: 100%;
 }
 .card-text {
   font-size: 1.5em;

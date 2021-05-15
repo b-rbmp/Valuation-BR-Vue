@@ -21,7 +21,7 @@
         Valuation-BR
       </b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-      <b-collapse id="nav-collapse" is-nav>
+      <b-collapse id="nav-collapse" v-model="showCollapse" is-nav>
         <!-- Center aligned nav items -->
         <b-nav-form class="ml-auto my-2 my-lg-0 justify-content-center mr-lg-5" v-if="ativos">
           <vue-bootstrap-typeahead
@@ -36,7 +36,7 @@
             size="md"
             type="submit"
             variant="outline-light"
-            class="my-2 my-sm-0 col-12 col-lg-4"
+            class="my-2 my-lg-0 col-11 mx-auto col-lg-4"
             v-on:click.prevent="searchAtivo"
             >Procurar</b-button
           >
@@ -60,7 +60,13 @@ export default {
   data() {
     return {
       ativo: '',
+      showCollapse: false,
     };
+  },
+  watch: {
+    $route() {
+      this.showCollapse = false;
+    },
   },
   methods: {
     searchAtivo() {
