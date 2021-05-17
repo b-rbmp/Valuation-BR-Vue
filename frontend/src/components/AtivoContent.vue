@@ -1,7 +1,7 @@
 <template>
   <div class="ativo-content">
     <div id="conditionalShowing" v-if="ativoInfo.status != 'loading' && !errorLoading">
-      <b-container v-if="ativoInfo.status == 'success'">
+      <b-container fluid="lg" v-if="ativoInfo.status == 'success'">
         <b-row class="justify-content-center">
           <b-col class="display-4 text-center pt-3">
             Valuation de <b-badge pill variant="dark"> {{ $route.params.ativo }} </b-badge>
@@ -11,7 +11,7 @@
         <b-card no-body>
           <b-tabs pills card content-class="mt-3" align="center" v-model="tabIndex">
             <b-tab title="Graham" :title-link-class="linkClass(0)" active>
-              <b-container>
+              <b-container fluid="lg">
                 <b-row class="justify-content-center">
                   <span class="display-4 method-title text-center">Método de Graham (Valor)</span>
                 </b-row>
@@ -284,4 +284,5 @@ export default {
 .method-title {
   font-size: 2rem;
 }
+
 </style>

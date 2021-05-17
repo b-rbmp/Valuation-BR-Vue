@@ -1,5 +1,5 @@
 <template>
-  <div class="results-content mt-4 col-12">
+  <div class="results-content mt-4">
     <b-card-group deck>
       <b-card
         header-bg-variant="dark"
