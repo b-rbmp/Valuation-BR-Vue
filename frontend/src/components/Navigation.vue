@@ -1,7 +1,7 @@
 <template>
   <div class="fixed-top">
     <b-navbar toggleable="lg" type="dark" variant="dark">
-      <b-navbar-brand to="/" class="ml-5 font-weight-bold">
+      <b-navbar-brand to="/" class="ml-1 ml-lg-5 font-weight-bold">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="32"

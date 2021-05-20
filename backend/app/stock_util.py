@@ -10,7 +10,6 @@ from yahooquery import Ticker
 from datetime import datetime
 import pandas as pd
 import numpy as np
-import json
 
 def get_acao(ticker):
     acao = Acao.query.filter_by(ticker=ticker).first()
@@ -74,6 +73,7 @@ def get_used_calculated_data(ticker):
         acaodata['lucro_liquido'] = acao.lucro_liq
         acaodata['n_acoes'] = acao.n_acoes
         acaodata['isbank'] = acao.isbank
+        acaodata['last_updated'] = acao.last_updated.strftime('%d/%m/%Y')
         return acaodata
     else:
         return 0

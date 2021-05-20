@@ -1,18 +1,25 @@
 <template>
-  <div class="ativo-content">
+  <div class="ativo-content-mobile">
     <div id="conditionalShowing" v-if="ativoInfo.status != 'loading' && !errorLoading">
-      <b-container fluid="lg" v-if="ativoInfo.status == 'success'">
+      <b-container fluid v-if="ativoInfo.status == 'success'">
         <b-row class="justify-content-center">
-          <b-col class="display-4 text-center pt-3">
+          <b-col class="display-4 ativo-title text-center pt-1">
             Valuation de <b-badge pill variant="dark"> {{ $route.params.ativo }} </b-badge>
           </b-col>
         </b-row>
         <br /><br />
-        <b-card no-body>
-          <b-tabs pills card content-class="mt-3" align="center" v-model="tabIndex">
-            <b-tab title="Graham" :title-link-class="linkClass(0)" active>
-              <b-container fluid="lg">
-                <b-row class="justify-content-center">
+        <b-row class="justify-content-center">
+          <div class="col-12 text-center">
+            <b-tabs
+              pills
+              fill
+              content-class="mt-3"
+              nav-class="navtab-style"
+              align="center"
+              v-model="tabIndex"
+            >
+              <b-tab title="Graham" :title-link-class="linkClass(0)" active>
+                <b-row class="justify-content-center mt-4">
                   <span class="display-4 method-title text-center">Método de Graham (Valor)</span>
                 </b-row>
                 <b-row class="justify-content-center">
@@ -20,50 +27,48 @@
                     :preco_justo="ativoInfo.preco_graham"
                     :cotacao_atual="ativoInfo.cotacao"
                     :upside="ativoInfo.upside_graham"
-                    class="col-12 col-lg-9"
+                    class="col-12"
                   />
                 </b-row>
                 <b-row class="justify-content-center">
                   <graham-exp-content
                     :lpa="ativoInfo.stockdata.lpa"
                     :vpa="ativoInfo.stockdata.vpa"
-                    class="col-12 col-lg-9"
+                    class="col-12"
                   />
                 </b-row>
                 <b-row class="justify-content-center">
-                  <grafico-content
+                  <grafico-content-mobile
                     :precoJusto="ativoInfo.preco_graham"
                     :graphData="ativoInfo.historico"
                     :stockName="$route.params.ativo"
-                    class="col-12 col-lg-9"
+                    class="col-12"
                     plotId="grahamPlot"
                   />
                 </b-row>
-              </b-container>
-            </b-tab>
-            <b-tab title="DCF(LPA)" :title-link-class="linkClass(1)">
-              <b-container>
-                <b-row class="justify-content-center">
+              </b-tab>
+              <b-tab title="DCF(LPA)" :title-link-class="linkClass(1)">
+                <b-row class="justify-content-center mt-4">
                   <span class="display-4 method-title text-center">
                     Método de Fluxo de Caixa Descontado com LPA (DCF-LPA)
                   </span>
                 </b-row>
                 <b-row class="justify-content-center">
-                  <dcf-form
+                  <dcf-form-mobile
                     :lpa_real="ativoInfo.stockdata.lpa"
                     :cotacao_atual="ativoInfo.cotacao"
                     :historico="ativoInfo.historico"
                   />
                 </b-row>
-              </b-container>
-            </b-tab>
-            <b-tab title="Lynch" :title-link-class="linkClass(2)">
-              <b-container>
-                <b-row class="justify-content-center">
+              </b-tab>
+              <b-tab title="Lynch" :title-link-class="linkClass(2)">
+                <b-row class="justify-content-center mt-4">
                   <span class="display-4 method-title text-center">
                     Método de Lynch
                   </span>
-                  <span class="text-center lead ml-5 mr-3 my-2">
+                </b-row>
+                <b-row class="justify-content-center">
+                  <span class="text-center method-title lead mr-3 my-2">
                     CRES
                   </span>
                   <b-form-checkbox
@@ -75,7 +80,7 @@
                     switch
                   >
                   </b-form-checkbox>
-                  <span class="text-center lead my-2 ml-2">
+                  <span class="text-center method-title lead my-2 ml-2">
                     ROE
                   </span>
                 </b-row>
@@ -85,7 +90,7 @@
                       :preco_justo="ativoInfo.preco_lynch_roe"
                       :cotacao_atual="ativoInfo.cotacao"
                       :upside="ativoInfo.upside_lynch_roe"
-                      class="col-12 col-lg-9"
+                      class="col-12"
                       key="results-roe"
                     />
                   </b-row>
@@ -95,16 +100,16 @@
                       :preco_lucro="ativoInfo.stockdata.preco_lucro"
                       :payout="ativoInfo.stockdata.payout"
                       :dividend_yield="ativoInfo.stockdata.dividend_yield"
-                      class="col-12 col-lg-9"
+                      class="col-12"
                     />
                   </b-row>
                   <b-row class="justify-content-center">
-                    <grafico-content
+                    <grafico-content-mobile
                       :precoJusto="ativoInfo.preco_lynch_roe"
                       :graphData="ativoInfo.historico"
                       :stockName="$route.params.ativo"
                       plotId="lynchPlot"
-                      class="col-12 col-lg-9"
+                      class="col-12"
                     />
                   </b-row>
                 </div>
@@ -114,7 +119,7 @@
                       :preco_justo="ativoInfo.preco_lynch_cres"
                       :cotacao_atual="ativoInfo.cotacao"
                       :upside="ativoInfo.upside_lynch_cres"
-                      class="col-12 col-lg-9"
+                      class="col-12"
                       key="results-cres"
                     />
                   </b-row>
@@ -123,24 +128,22 @@
                       :crescimento="ativoInfo.stockdata.cres5anos"
                       :preco_lucro="ativoInfo.stockdata.preco_lucro"
                       :dividend_yield="ativoInfo.stockdata.dividend_yield"
-                      class="col-12 col-lg-9"
+                      class="col-12"
                     />
                   </b-row>
                   <b-row class="justify-content-center">
-                    <grafico-content
+                    <grafico-content-mobile
                       :precoJusto="ativoInfo.preco_lynch_cres"
                       :graphData="ativoInfo.historico"
                       :stockName="$route.params.ativo"
                       plotId="lynchPlotCres"
-                      class="col-12 col-lg-9"
+                      class="col-12"
                     />
                   </b-row>
                 </div>
-              </b-container>
-            </b-tab>
-            <b-tab title="PSBe" :title-link-class="linkClass(3)">
-              <b-container>
-                <b-row class="justify-content-center">
+              </b-tab>
+              <b-tab title="PSBe" :title-link-class="linkClass(3)">
+                <b-row class="justify-content-center mt-4">
                   <span class="display-4 method-title text-center">
                     Método PSBe (Valor)
                   </span>
@@ -156,7 +159,7 @@
                       :preco_justo="ativoInfo.preco_psbe"
                       :cotacao_atual="ativoInfo.cotacao"
                       :upside="ativoInfo.upside_psbe"
-                      class="col-12 col-lg-9"
+                      class="col-12"
                     />
                   </b-row>
                   <b-row class="justify-content-center">
@@ -168,29 +171,29 @@
                       :n_acoes="ativoInfo.stockdata.n_acoes"
                       :constante="5.5"
                       :margem_liq="ativoInfo.stockdata.margem_liq"
-                      class="col-12 col-lg-9"
+                      class="col-12"
                     />
                   </b-row>
                   <b-row class="justify-content-center">
-                    <grafico-content
+                    <grafico-content-mobile
                       :precoJusto="ativoInfo.preco_psbe"
                       :graphData="ativoInfo.historico"
                       :stockName="$route.params.ativo"
                       plotId="psbePlot"
-                      class="col-12 col-lg-9"
+                      class="col-12"
                     />
                   </b-row>
                 </div>
-              </b-container>
-            </b-tab>
-          </b-tabs>
-          <b-row class="mt-1 justify-content-center">
-              <span class="text-center"
-                >Ultima atualização dos dados fundamentalistas:
-                {{ ativoInfo.stockdata.last_updated }}
-              </span>
-            </b-row>
-        </b-card>
+              </b-tab>
+              <b-row class="mx-1 mt-2">
+                <span class="text-center"
+                  >Ultima atualização dos dados fundamentalistas:
+                  {{ ativoInfo.stockdata.last_updated }}
+                </span>
+              </b-row>
+            </b-tabs>
+          </div>
+        </b-row>
       </b-container>
       <error-page
         title="Ativo não encontrado"
@@ -218,17 +221,17 @@
 
 <script>
 import { fetchAtivo } from '@/api';
+import ErrorPage from './errors/ErrorPage.vue';
 import ResultsContent from './ativo_subcomponents/ResultsContent.vue';
 import GrahamExpContent from './ativo_subcomponents/GrahamExpContent.vue';
+import GraficoContentMobile from './ativo_subcomponents/mobile/GraficoContentMobile.vue';
 import LynchExpContent from './ativo_subcomponents/LynchExpContent.vue';
-import PsbeExpContent from './ativo_subcomponents/PsbeExpContent.vue';
-import GraficoContent from './ativo_subcomponents/GraficoContent.vue';
 import LynchExpContentCres from './ativo_subcomponents/LynchExpContentCres.vue';
-import DcfForm from './ativo_subcomponents/DcfForm.vue';
-import ErrorPage from './errors/ErrorPage.vue';
+import PsbeExpContent from './ativo_subcomponents/PsbeExpContent.vue';
+import DcfFormMobile from './ativo_subcomponents/mobile/DcfFormMobile.vue';
 
 export default {
-  name: 'AtivoContent',
+  name: 'AtivoContentMobile',
   data() {
     return {
       tabIndex: 0,
@@ -266,14 +269,14 @@ export default {
     },
   },
   components: {
+    ErrorPage,
     ResultsContent,
     GrahamExpContent,
+    GraficoContentMobile,
     LynchExpContent,
-    PsbeExpContent,
-    GraficoContent,
     LynchExpContentCres,
-    DcfForm,
-    ErrorPage,
+    PsbeExpContent,
+    DcfFormMobile,
   },
 };
 </script>
@@ -284,10 +287,16 @@ export default {
   transition: 0.35s;
   background-color: rgba(0, 0, 0, 0.2) !important;
 }
+.navtab-style {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
 </style>
 
 <style scoped>
 .method-title {
-  font-size: 2rem;
+  font-size: 1.5rem;
+}
+.ativo-title {
+  font-size: 3rem;
 }
 </style>
