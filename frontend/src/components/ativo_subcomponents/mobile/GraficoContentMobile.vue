@@ -1,5 +1,5 @@
 <template>
-  <div class="grafico-content mt-3">
+  <div class="grafico-content-mobile mt-3">
     <b-button block variant="dark">
       Gráfico
     </b-button>
@@ -11,7 +11,7 @@
 import Plotly from 'plotly.js';
 
 export default {
-  name: 'GraficoContent',
+  name: 'GraficoContentMobile',
   props: {
     precoJusto: Number,
     graphData: Object,
@@ -97,7 +97,7 @@ export default {
 </script>
 
 <style scoped>
-.grafico-content {
+.grafico-content-mobile {
   min-width: 50%;
 }
 </style>

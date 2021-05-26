@@ -205,7 +205,7 @@
           />
         </b-row>
         <b-row class="justify-content-center">
-          <dcf-explication-content
+          <dcf-explication-content-mobile
             class="col-12"
             :eps="resultado.eps"
             :npv="resultado.npv"
@@ -244,14 +244,14 @@
 import { required, decimal, integer } from 'vuelidate/lib/validators';
 import ResultsContent from '../ResultsContent.vue';
 import GraficoContentMobile from './GraficoContentMobile.vue';
-import DcfExplicationContent from '../DcfExplicationContent.vue';
+import DcfExplicationContentMobile from './DcfExplicationContentMobile.vue';
 
 export default {
   name: 'DcfForm',
   components: {
     ResultsContent,
     GraficoContentMobile,
-    DcfExplicationContent,
+    DcfExplicationContentMobile,
   },
   data() {
     return {
