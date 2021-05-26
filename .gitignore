@@ -12,10 +12,10 @@
 env/
 dist/
 nginx/
-.vscode
-.vs
-.env
-.dockerignore
-.txt
+*.vscode
+*.vs
+*.env
+*.dockerignore
+*.txt
 Dockerfile
 *.txt
