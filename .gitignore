@@ -17,4 +17,5 @@ nginx/
 .env
 .dockerignore
 .txt
+**/*.txt
 Dockerfile
