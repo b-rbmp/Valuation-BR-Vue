@@ -4,9 +4,9 @@ import 'mutationobserver-shim';
 import Vue from 'vue';
 import Vuelidate from 'vuelidate';
 import './plugins/bootstrap-vue';
+import VueGtag from 'vue-gtag';
 
 import App from './App.vue';
-import VueGtag from "vue-gtag";
 import router from './router';
 import store from './store';
 
@@ -14,7 +14,7 @@ Vue.config.productionTip = false;
 Vue.use(Vuelidate);
 
 Vue.use(VueGtag, {
-  config: { id: "G-ELLW2HKME8" }
+  config: { id: 'G-ELLW2HKME8' },
 }, router);
 
 new Vue({

@@ -80,7 +80,7 @@ export default {
         }
 
         // Guarda as pesquisas feitas, incluindo as invalidas
-        this.$gtag.event('search', { search_term: this.ativo.toUpperCase() })
+        this.$gtag.event('search', { search_term: this.ativo.toUpperCase() });
       }
     },
   },
