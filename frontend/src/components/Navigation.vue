@@ -78,6 +78,9 @@ export default {
         } else {
           this.$router.push({ name: 'Ativo', params: { ativo: this.ativo.toUpperCase() } });
         }
+
+        // Guarda as pesquisas feitas, incluindo as invalidas
+        this.$gtag.event('search', { search_term: this.ativo.toUpperCase() })
       }
     },
   },
