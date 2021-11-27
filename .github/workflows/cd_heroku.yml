@@ -15,13 +15,12 @@ jobs:
       - name: Build and push Docker to Heroku
         env:
           HEROKU_APP_NAME: valuation-br
-          DOCKERFILE_DIRECTORY: "."
           HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
           DOCKERFILE_NAME: "Dockerfile"
           DOCKER_OPTIONS: "--no-cache"
         run: |
-          cd ${DOCKERFILE_DIRECTORY}
+          cd ${{ github.workspace }}
           echo ${HEROKU_API_KEY} | docker login \
             --username=${HEROKU_EMAIL} \
             registry.heroku.com \
