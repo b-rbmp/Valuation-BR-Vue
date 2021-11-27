@@ -15,7 +15,4 @@ nginx/
 *.vscode
 *.vs
 *.env
-*.dockerignore
-*.txt
-Dockerfile
 *.txt
