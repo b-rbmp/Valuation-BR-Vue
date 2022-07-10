@@ -6,3 +6,5 @@ Site para visualizar o valuation de Empresas da B3 utilizando métodos famosos, 
 <p>
   Fonte de dados fundamentalistas: http://www.fundamentus.com.br/
 </p>
+
+OBS: Apenas para uso educacional
