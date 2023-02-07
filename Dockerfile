@@ -8,7 +8,7 @@ COPY ./frontend .
 RUN npm run build
 
 # production
-FROM nginx:stable-alpine as production
+FROM nginx:1.21.4-alpine as production
 WORKDIR /app
 RUN apk update && apk add --no-cache python3 && \
     python3 -m ensurepip && \
@@ -25,5 +25,4 @@ RUN pip install -r requirements.txt
 RUN pip install gunicorn
 COPY ./backend .
 CMD gunicorn -b 0.0.0.0:5000 wsgi:app --daemon && \
-      sed -i -e 's/$PORT/'"$PORT"'/g' /etc/nginx/conf.d/default.conf && \
       nginx -g 'daemon off;'
