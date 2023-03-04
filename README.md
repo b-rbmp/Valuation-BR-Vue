@@ -1,10 +1,11 @@
 # Valuation-BR-Vue
-Site para visualizar o valuation de Empresas da B3 utilizando métodos famosos, Realizado em Vue+Flask API
 
-<h2><a href="https://valuation-br.fly.dev/">Clique aqui para visitar</a></h2>
+WebApp that uses Vue.js to visualize the valuation of B3 companies using famous methods, with Flask as backend.
+
+<h2><a href="https://valuation-br.fly.dev/">Visit here</a></h2>
 
 <p>
-  Fonte de dados fundamentalistas: http://www.fundamentus.com.br/
+  Source of Fundamentals Data: http://www.fundamentus.com.br/
 </p>
 
-OBS: Apenas para uso educacional
+PS: Only for educational purposes
